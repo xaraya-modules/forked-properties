@@ -24,9 +24,9 @@
  *
  * The property has a notion of country and will display a country listing  when it encounters a field called "country"
  * The default layout displays all the fields in a column one below the other in the order configured
- * The layout "country" displays the fields in a country specific layout. In this case the fields must have names 
+ * The layout "country" displays the fields in a country specific layout. In this case the fields must have names
  * that the property recognizes, and these names can vary according to the country template.
- * If the layout is defined as "country" the property will try and use the specific display associated with the 
+ * If the layout is defined as "country" the property will try and use the specific display associated with the
  * value of the country field, or fall back to the default display if no such display exists.
  *
  * The difference between the value arrays for country specific and default layouts stems primarily from the fact that
@@ -40,7 +40,7 @@ class AddressProperty extends TextBoxProperty
     public $id         = 30033;
     public $name       = 'address';
     public $desc       = 'Address';
-    public $reqmodules = array();
+    public $reqmodules = [];
 
     public $display_address_components;
     public $display_address_default_country = '';
@@ -48,15 +48,15 @@ class AddressProperty extends TextBoxProperty
     public $validation_ignore_validations   = true;
     public $validation_allowempty = true;
 
-    public $specified_countries       = array('ch','us');   // The countries that have non-default layout templates in this property
+    public $specified_countries       = ['ch','us'];   // The countries that have non-default layout templates in this property
 
-    function __construct(ObjectDescriptor $descriptor)
+    public function __construct(ObjectDescriptor $descriptor)
     {
-        $this->display_address_components = 'street,' . xarML('Street') . 
-                                            ';street2,' . xarML('Street') . 
-                                            ';city,' . xarML('City') . 
-                                            ';postal_code,' . xarML('Postal Code') . 
-                                            ';region,' . xarML('Region') . 
+        $this->display_address_components = 'street,' . xarML('Street') .
+                                            ';street2,' . xarML('Street') .
+                                            ';city,' . xarML('City') .
+                                            ';postal_code,' . xarML('Postal Code') .
+                                            ';region,' . xarML('Region') .
                                             ';country,' . xarML('Country') . ';';
 
         parent::__construct($descriptor);
@@ -69,11 +69,11 @@ class AddressProperty extends TextBoxProperty
     {
         $name = empty($name) ? 'dd_'.$this->id : $name;
         $valid = true;
-        $invalid = array();
-        $value = array();   // We don't allow a value to be passed to this method
+        $invalid = [];
+        $value = [];   // We don't allow a value to be passed to this method
 
         if (!empty($this->display_address_components)) {
-            $textbox = DataPropertyMaster::getProperty(array('name' => 'textbox'));
+            $textbox = DataPropertyMaster::getProperty(['name' => 'textbox']);
             $textbox->validation_allowempty = $this->validation_allowempty;
             $address_components = $this->getAddressComponents($this->display_address_components);
             if (!$this->validation_ignore_validations) {
@@ -83,7 +83,7 @@ class AddressProperty extends TextBoxProperty
                 $isvalid = $textbox->checkInput($name . '["' . $field['id'] . '"]');
                 $valid = $valid && $isvalid;
                 if ($isvalid) {
-                    $value[] = array('id' => $field['id'], 'value' => $textbox->value);
+                    $value[] = ['id' => $field['id'], 'value' => $textbox->value];
                 } else {
                     if (empty($field['name'])) {
                         $invalid[] = strtolower($field['id']);
@@ -99,7 +99,7 @@ class AddressProperty extends TextBoxProperty
         } else {
             $this->value = null;
             $count = count($invalid);
-            $invalid = implode(',',$invalid);
+            $invalid = implode(',', $invalid);
             if ($count == 1) {
                 $this->invalid = xarML('The field #(1) is not valid', $invalid);
             } else {
@@ -123,27 +123,35 @@ class AddressProperty extends TextBoxProperty
         foreach ($valuearray as $part) {
             try {
                 if ($part['id'] == 'country') {
-                    $country = DataPropertyMaster::getProperty(array('name' => 'countrylisting'));
+                    $country = DataPropertyMaster::getProperty(['name' => 'countrylisting']);
                     $country->validation_override = true;
                     $country->value = $part['value'];
                     $part['value'] = $country->getOption();
                 }
                 $tempvalue = trim($part['value']);
-                if (empty($tempvalue)) continue;
-                if (empty($value)) $value = $tempvalue;
-                else $value .= ', ' . $tempvalue;
-            } catch (Exception $e) {}
+                if (empty($tempvalue)) {
+                    continue;
+                }
+                if (empty($value)) {
+                    $value = $tempvalue;
+                } else {
+                    $value .= ', ' . $tempvalue;
+                }
+            } catch (Exception $e) {
+            }
         }
         return $value;
     }
-    
-    public function setValue($value=null) 
+
+    public function setValue($value=null)
     {
-        if (empty($value)) $value = array();
+        if (empty($value)) {
+            $value = [];
+        }
         $this->value = serialize($value);
     }
 
-    public function showInput(Array $data = array())
+    public function showInput(array $data = [])
     {
         if (isset($data['module'])) {
             $this->module = $data['module'];
@@ -152,30 +160,40 @@ class AddressProperty extends TextBoxProperty
             $this->module = $info[0];
             $data['module'] = $this->module;
         }
-        if (empty($data['address_components'])) $data['address_components'] = $this->display_address_components;
-        else $this->display_address_components = $data['address_components'];
+        if (empty($data['address_components'])) {
+            $data['address_components'] = $this->display_address_components;
+        } else {
+            $this->display_address_components = $data['address_components'];
+        }
         $data['address_components'] = $this->getAddressComponents($data['address_components']);
 
-        if (isset($data['value'])) $this->value = $data['value'];
+        if (isset($data['value'])) {
+            $this->value = $data['value'];
+        }
         $data['value'] = $this->getValueArray();
 
         // Pass the raw value in case we need to debug
         $data['rawvalue'] = $this->value;
-        
+
         // Cater to values as simple strings (errors, old versions etc.)
         if (!is_array($data['value'])) {
-            $data['value'] = array(array('id' => 'street', 'value' => $data['value']));
+            $data['value'] = [['id' => 'street', 'value' => $data['value']]];
         }
-        
+
         // Check if we should use country layouts
-        if ($this->display_country_layout) $data['layout'] = 'country';
+        if ($this->display_country_layout) {
+            $data['layout'] = 'country';
+        }
         // The setting can be overridden
-        if (empty($data['layout'])) $data['layout'] = $this->display_layout;
-        else $this->display_layout = $data['layout'];
+        if (empty($data['layout'])) {
+            $data['layout'] = $this->display_layout;
+        } else {
+            $this->display_layout = $data['layout'];
+        }
 
         // For country specific layouts we need to reformat the value array
         if ($data['layout'] == 'country') {
-            $newvalue = array();
+            $newvalue = [];
             foreach ($data['value'] as $value) {
                 $newvalue[$value['id']] = $value;
             }
@@ -191,8 +209,8 @@ class AddressProperty extends TextBoxProperty
         }
 
         // Get an instance of hte country dropdown for the template
-        $data['countrylisting'] = DataPropertyMaster::getProperty(array('name' => 'countrylisting'));
-        
+        $data['countrylisting'] = DataPropertyMaster::getProperty(['name' => 'countrylisting']);
+
         if (!empty($this->display_address_default_country)) {
             // Assign the default value to the property's country dropdown
             foreach ($data['value'] as $key => $value) {
@@ -206,11 +224,11 @@ class AddressProperty extends TextBoxProperty
 
         // Send this value to the template
         $data['default_country'] = $this->display_address_default_country;
-        
+
         return DataProperty::showInput($data);
     }
-    
-    public function showOutput(Array $data = array())
+
+    public function showOutput(array $data = [])
     {
         if (isset($data['module'])) {
             $this->module = $data['module'];
@@ -219,22 +237,32 @@ class AddressProperty extends TextBoxProperty
             $this->module = $info[0];
             $data['module'] = $this->module;
         }
-        if (empty($data['address_components'])) $data['address_components'] = $this->display_address_components;
-        else $this->display_address_components = $data['address_components'];
+        if (empty($data['address_components'])) {
+            $data['address_components'] = $this->display_address_components;
+        } else {
+            $this->display_address_components = $data['address_components'];
+        }
         $data['address_components'] = $this->getAddressComponents($data['address_components']);
 
-        if (isset($data['value'])) $this->value = $data['value'];
+        if (isset($data['value'])) {
+            $this->value = $data['value'];
+        }
 
         // Check if we should use country layouts
-        if ($this->display_country_layout) $data['layout'] = 'country';
+        if ($this->display_country_layout) {
+            $data['layout'] = 'country';
+        }
         // The setting can be overridden
-        if (empty($data['layout'])) $data['layout'] = $this->display_layout;
-        else $this->display_layout = $data['layout'];
+        if (empty($data['layout'])) {
+            $data['layout'] = $this->display_layout;
+        } else {
+            $this->display_layout = $data['layout'];
+        }
 
         // For country specific layouts we need to reformat the value array
         if ($data['layout'] == 'country') {
             $data['value'] = $this->getValueArray();
-            $newvalue = array();
+            $newvalue = [];
             foreach ($data['value'] as $value) {
                 $newvalue[$value['id']]['value'] = $value['value'];
             }
@@ -250,78 +278,91 @@ class AddressProperty extends TextBoxProperty
         } else {
             $data['value'] = $this->getValue();
         }
-        
+
         return DataProperty::showOutput($data);
     }
 
-    function getValueArray()
+    public function getValueArray()
     {
         $value = @unserialize($this->value);
 
-        if (!is_array($value)) return array();
-        
+        if (!is_array($value)) {
+            return [];
+        }
+
         // Cater to old array definitions
         reset($value);
         $first_row = current($value);
         if (!is_array($first_row)) {
-            $reworked_array = array();
+            $reworked_array = [];
             foreach ($value as $k => $v) {
-                $reworked_array[] = array('id' => $k, 'value' => $v);
+                $reworked_array[] = ['id' => $k, 'value' => $v];
             }
             $value = $reworked_array;
         }
         // Rework old definitions of street address components
         foreach ($value as $k => $v) {
-            if ($v['id'] == 'line1') $v['id'] = 'street';
-            if ($v['id'] == 'line2') $v['id'] = 'street2';
-            if ($v['id'] == 'line_1') $v['id'] = 'street';
-            if ($v['id'] == 'line_2') $v['id'] = 'street2';
+            if ($v['id'] == 'line1') {
+                $v['id'] = 'street';
+            }
+            if ($v['id'] == 'line2') {
+                $v['id'] = 'street2';
+            }
+            if ($v['id'] == 'line_1') {
+                $v['id'] = 'street';
+            }
+            if ($v['id'] == 'line_2') {
+                $v['id'] = 'street2';
+            }
             $value[$k] = $v;
         }
 
         $components = $this->getAddressComponents($this->display_address_components);
-        $valuearray = array();
+        $valuearray = [];
         foreach ($components as $v) {
             $found = false;
             foreach ($value as $part) {
                 if (isset($part['id']) && ($part['id'] == $v['id'])) {
-                    if (empty($part['value'])) $part['value'] = '';
-                    $valuearray[] = array('id' => $v['id'], 'value' => $part['value']);
+                    if (empty($part['value'])) {
+                        $part['value'] = '';
+                    }
+                    $valuearray[] = ['id' => $v['id'], 'value' => $part['value']];
                     $found = true;
                     break;
                 }
             }
-            if (!$found) $valuearray[] = array('id' => $v['id'], 'value' => '');
+            if (!$found) {
+                $valuearray[] = ['id' => $v['id'], 'value' => ''];
+            }
         }
 
         return $valuearray;
     }
-    
-    function getAddressComponents($componentstring)
+
+    public function getAddressComponents($componentstring)
     {
         $components = explode(';', $componentstring);
         // remove the last (empty) element
         array_pop($components);
-        $componentarray = array();
-        foreach ($components as $component)
-        {
+        $componentarray = [];
+        foreach ($components as $component) {
             // allow escaping \, for values that need a comma
             if (preg_match('/(?<!\\\),/', $component)) {
                 // if the component contains a , we'll assume it's an name/displayname combination
-                list($name,$displayname) = preg_split('/(?<!\\\),/', $component);
-                $name = trim(strtr($name,array('\,' => ',')));
-                $displayname = trim(strtr($displayname,array('\,' => ',')));
-                $componentarray[] = array('id' => $name, 'name' => $displayname);
+                [$name, $displayname] = preg_split('/(?<!\\\),/', $component);
+                $name = trim(strtr($name, ['\,' => ',']));
+                $displayname = trim(strtr($displayname, ['\,' => ',']));
+                $componentarray[] = ['id' => $name, 'name' => $displayname];
             } else {
                 // otherwise we'll use the component for both name and displayname
-                $component = trim(strtr($component,array('\,' => ',')));
-                $componentarray[] = array('id' => $component, 'name' => $component);
+                $component = trim(strtr($component, ['\,' => ',']));
+                $componentarray[] = ['id' => $component, 'name' => $component];
             }
         }
         return $componentarray;
     }
 
-	function showHidden(Array $data = array())
+    public function showHidden(array $data = [])
     {
         if (isset($data['module'])) {
             $this->module = $data['module'];
@@ -330,26 +371,34 @@ class AddressProperty extends TextBoxProperty
             $this->module = $info[0];
             $data['module'] = $this->module;
         }
-        if (empty($data['address_components'])) $data['address_components'] = $this->display_address_components;
-        else $this->display_address_components = $data['address_components'];
+        if (empty($data['address_components'])) {
+            $data['address_components'] = $this->display_address_components;
+        } else {
+            $this->display_address_components = $data['address_components'];
+        }
         $data['address_components'] = $this->getAddressComponents($data['address_components']);
 
-        if (isset($data['value'])) $this->value = $data['value'];
+        if (isset($data['value'])) {
+            $this->value = $data['value'];
+        }
         $data['value'] = $this->getValueArray();
 
         // Pass the raw value in case we need to debug
         $data['rawvalue'] = $this->value;
-        
+
         // Cater to values as simple strings (errors, old versions etc.)
         if (!is_array($data['value'])) {
-            $data['value'] = array(array('id' => 'street', 'value' => $data['value']));
+            $data['value'] = [['id' => 'street', 'value' => $data['value']]];
         }
-        
+
         // For country specific layouts we need to reformat the value array
-        if (empty($data['layout'])) $data['layout'] = $this->display_layout;
-        else $this->display_layout = $data['layout'];
+        if (empty($data['layout'])) {
+            $data['layout'] = $this->display_layout;
+        } else {
+            $this->display_layout = $data['layout'];
+        }
         if ($data['layout'] == 'country') {
-            $newvalue = array();
+            $newvalue = [];
             foreach ($data['value'] as $value) {
                 $newvalue[$value['id']] = $value;
             }
@@ -373,5 +422,3 @@ class AddressProperty extends TextBoxProperty
         return DataProperty::showHidden($data);
     }
 }
-
-?>

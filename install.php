@@ -16,19 +16,15 @@ sys::import('modules.dynamicdata.class.properties.interfaces');
 
 class AddressPropertyInstall extends AddressProperty implements iDataPropertyInstall
 {
-
-    public function install(Array $data=array())
+    public function install(array $data=[])
     {
         $dat_file = sys::code() . 'properties/address/data/configurations-dat.xml';
-        $data = array('file' => $dat_file);
+        $data = ['file' => $dat_file];
         try {
-        $objectid = xarMod::apiFunc('dynamicdata','util','import', $data);
+            $objectid = xarMod::apiFunc('dynamicdata', 'util', 'import', $data);
         } catch (Exception $e) {
             //
         }
         return true;
     }
-    
 }
-
-?>
