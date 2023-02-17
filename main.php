@@ -112,7 +112,7 @@ class AddressProperty extends TextBoxProperty
     public function validateValue($value = null)
     {
         // Dummy method
-        xarLog::message("DataProperty::validateValue: Validating property " . $this->name, xarLog::LEVEL_INFO);
+        xarLog::message("DataProperty::validateValue: Validating property " . $this->name, xarLog::LEVEL_DEBUG);
         return true;
     }
 

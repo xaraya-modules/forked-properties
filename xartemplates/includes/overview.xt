@@ -27,13 +27,13 @@
             <h3>Usage</h3>
             <h4>Standalone</h4>
                 <pre>
-    &lt;xar:data-input type="address" <i>[attr1="value1",...]</i> /&gt;
-    &lt;xar:data-output type="address" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-input type="address" <em>[attr1="value1",...]</em> /&gt;
+    &lt;xar:data-output type="address" <em>[attr1="value1",...]</em> /&gt;
                 </pre>
             <h4>Bound</h4>
                 <pre>
-    &lt;xar:data-input property="$properties['address']" <i>[attr1="value1",...]</i> /&gt;
-    &lt;xar:data-output property="$properties['address']" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-input property="$properties['address']" <em>[attr1="value1",...]</em> /&gt;
+    &lt;xar:data-output property="$properties['address']" <em>[attr1="value1",...]</em> /&gt;
                 </pre>
             <h3>Attributes</h3>
             <ul>
