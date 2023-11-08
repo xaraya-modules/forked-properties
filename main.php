@@ -161,8 +161,8 @@ Notes:
             if (is_object($object)) {
                 throw new Exception('Object passed to the listing property instead of name');
             }
-            sys::import('modules.dynamicdata.class.objects.master');
-            $object = DataObjectMaster::getObjectList(['name' => $objectname]);
+            sys::import('modules.dynamicdata.class.objects.factory');
+            $object = DataObjectFactory::getObjectList(['name' => $objectname]);
         } elseif (isset($object)) {
             if (!is_object($object)) {
                 throw new Exception('No object passed to the listing property');
@@ -170,8 +170,8 @@ Notes:
                 $objectname = $object->name;
                 $data['objectname'] = $objectname;
                 if (!method_exists($object, 'getItems')) {
-                    sys::import('modules.dynamicdata.class.objects.master');
-                    $object = DataObjectMaster::getObjectList(['name' => $objectname]);
+                    sys::import('modules.dynamicdata.class.objects.factory');
+                    $object = DataObjectFactory::getObjectList(['name' => $objectname]);
                 }
             }
         } else {

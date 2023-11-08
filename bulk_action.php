@@ -48,7 +48,7 @@ function listing_bulk_action()
         xarController::redirect($returnurl);
     }
 
-    $listing = DataObjectMaster::getObject(['name' => $objectname]);
+    $listing = DataObjectFactory::getObject(['name' => $objectname]);
     if (!empty($listing->filepath) && $listing->filepath != 'auto') {
         include_once(sys::code() . $listing->filepath);
     }
