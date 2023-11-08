@@ -13,13 +13,13 @@
 
 sys::import('properties.languages.main');
 sys::import('modules.dynamicdata.class.properties.interfaces');
-sys::import('modules.dynamicdata.class.objects.master');
+sys::import('modules.dynamicdata.class.objects.factory');
 
 class LanguagesPropertyInstall extends LanguagesProperty implements iDataPropertyInstall
 {
     public function install(array $data=[])
     {
-        if (!DataObjectMaster::isObject(['name' => 'languages'])) {
+        if (!DataObjectFactory::isObject(['name' => 'languages'])) {
             $files[] = sys::code() . 'properties/languages/data/language-def.xml';
             $files[] = sys::code() . 'properties/languages/data/language-dat.xml';
             foreach ($files as $file) {
