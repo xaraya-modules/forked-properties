@@ -49,6 +49,7 @@ class AddressProperty extends TextBoxProperty
     public $validation_allowempty = true;
 
     public $specified_countries       = ['ch','us'];   // The countries that have non-default layout templates in this property
+    public $module;
 
     public function __construct(ObjectDescriptor $descriptor)
     {
@@ -123,6 +124,7 @@ class AddressProperty extends TextBoxProperty
         foreach ($valuearray as $part) {
             try {
                 if ($part['id'] == 'country') {
+                    /** @var SelectProperty $country */
                     $country = DataPropertyMaster::getProperty(['name' => 'countrylisting']);
                     $country->validation_override = true;
                     $country->value = $part['value'];
