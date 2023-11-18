@@ -98,10 +98,10 @@ class IconCheckboxProperty extends CheckboxProperty
      * Retrieve or check an individual option on demand
      *
      * @param  $check boolean
-     * @return if check == false:
+     * @return mixed if check == false:
      *                - display value, if found, of an option whose store value is $this->value
      *                - $this->value, if not found
-     * @return if check == true:
+     *               if check == true:
      *                - true, if an option exists whose store value is $this->value
      *                - false, if no such option exists
      */
