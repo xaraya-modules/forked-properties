@@ -72,7 +72,7 @@ class QR_BarCode extends xarObject
     /**
      * SMS QR code
      * @param string $phone
-     * @param string $text
+     * @param string $msg
      */
     public function sms($phone = null, $msg = null)
     {
@@ -104,7 +104,6 @@ class QR_BarCode extends xarObject
 
     /**
      * Generate QR code image
-     * @param int $size
      * @param string $filename
      * @return bool
      */
