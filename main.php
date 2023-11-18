@@ -37,6 +37,7 @@ class QRCodeProperty extends TextBoxProperty
     public $size;
     public $content;
     public $filename;
+    public $qr;
 
     public function __construct(ObjectDescriptor $descriptor)
     {
