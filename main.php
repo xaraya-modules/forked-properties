@@ -53,7 +53,8 @@ class PagerProperty extends TextBoxProperty
         $this->template =  'pager';
         $this->filepath   = 'auto';
 
-        extract($descriptor->getArgs());
+        $args = $descriptor->getArgs();
+        extract($args);
 
         if (!empty($startnum)) {
             $this->startnum = $startnum;
@@ -156,9 +157,7 @@ class PagerProperty extends TextBoxProperty
  * @author Jason Judge
  * @since 2003/10/09
  * @access public
- * @param integer $startNum     start item
- * @param integer $itemsPerPage number of links to display (default=10)
- * @param integer $blockOptions number of pages to display at once (default=10) or array of advanced options
+ * @param integer $currentItem     start item
  *
  * @todo  Move this somewhere else, preferably transparent and a widget (which might be mutually exclusive)
  */
@@ -256,7 +255,7 @@ class PagerProperty extends TextBoxProperty
         $pageNum = (int)ceil(($blockFirstItem - $firstItem + 1) / $this->items_per_page) + $firstPage - 1;
         for ($i = $blockFirstItem; $i <= $blockLastItem; $i += $this->items_per_page) {
             if (!empty($this->urltemplate)) {
-                $data['middleurls'][$pageNum] = str_replace([$urlItemMatch,$urlItemMatchEnc], $i, $this->urltemplate);
+                $data['middleurls'][$pageNum] = str_replace([$urlItemMatch,$urlItemMatchEnc], [$i,$i], $this->urltemplate);
             }
             $data['middleitems'][$pageNum] = $i;
             $data['middleitemsfrom'][$pageNum] = $i;
@@ -294,8 +293,8 @@ class PagerProperty extends TextBoxProperty
 
         if (!empty($this->urltemplate)) {
             // These two links are for first and last pages.
-            $data['firsturl'] = str_replace([$urlItemMatch,$urlItemMatchEnc], $data['firstpage'], $this->urltemplate);
-            $data['lasturl'] = str_replace([$urlItemMatch,$urlItemMatchEnc], $data['lastpage'], $this->urltemplate);
+            $data['firsturl'] = str_replace([$urlItemMatch,$urlItemMatchEnc], [$data['firstpage'],$data['firstpage']], $this->urltemplate);
+            $data['lasturl'] = str_replace([$urlItemMatch,$urlItemMatchEnc], [$data['lastpage'],$data['lastpage']], $this->urltemplate);
         }
 
         $data['firstpagenum'] = $firstPage;
@@ -306,7 +305,7 @@ class PagerProperty extends TextBoxProperty
             $data['prevpageitems'] = $this->items_per_page;
             $data['prevpage'] = ($pageFirstItem - $this->items_per_page);
             if (!empty($this->urltemplate)) {
-                $data['prevpageurl'] = str_replace([$urlItemMatch,$urlItemMatchEnc], $data['prevpage'], $this->urltemplate);
+                $data['prevpageurl'] = str_replace([$urlItemMatch,$urlItemMatchEnc], [$data['prevpage'],$data['prevpage']], $this->urltemplate);
             }
         } else {
             $data['prevpageitems'] = 0;
@@ -321,7 +320,7 @@ class PagerProperty extends TextBoxProperty
             $data['nextpageitems'] = ($nextPageLastItem - $pageLastItem);
             $data['nextpage'] = ($pageLastItem + 1);
             if (!empty($this->urltemplate)) {
-                $data['nextpageurl'] = str_replace([$urlItemMatch,$urlItemMatchEnc], $data['nextpage'], $this->urltemplate);
+                $data['nextpageurl'] = str_replace([$urlItemMatch,$urlItemMatchEnc], [$data['nextpage'],$data['nextpage']], $this->urltemplate);
             }
         } else {
             $data['nextpageitems'] = 0;
@@ -332,7 +331,7 @@ class PagerProperty extends TextBoxProperty
             $data['prevblockpages'] = $blockSize;
             $data['prevblock'] = ($blockFirstItem - $itemsPerBlock);
             if (!empty($this->urltemplate)) {
-                $data['prevblockurl'] = str_replace([$urlItemMatch,$urlItemMatchEnc], $data['prevblock'], $this->urltemplate);
+                $data['prevblockurl'] = str_replace([$urlItemMatch,$urlItemMatchEnc], [$data['prevblock'],$data['prevblock']], $this->urltemplate);
             }
         } else {
             $data['prevblockpages'] = 0;
@@ -347,7 +346,7 @@ class PagerProperty extends TextBoxProperty
             $data['nextblockpages'] = ceil(($nextBlockLastItem - $blockLastItem) / $this->items_per_page);
             $data['nextblock'] = ($blockLastItem + 1);
             if (!empty($this->urltemplate)) {
-                $data['nextblockurl'] = str_replace([$urlItemMatch,$urlItemMatchEnc], $data['nextblock'], $this->urltemplate);
+                $data['nextblockurl'] = str_replace([$urlItemMatch,$urlItemMatchEnc], [$data['nextblock'],$data['nextblock']], $this->urltemplate);
             }
         } else {
             $data['nextblockpages'] = 0;
