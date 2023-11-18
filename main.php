@@ -64,6 +64,7 @@ class LanguagesProperty extends ObjectRefProperty
         }
 
         sys::import('modules.dynamicdata.class.properties.master');
+        /** @var ObjectRefProperty $property */
         $property = DataPropertyMaster::getProperty(['name' => 'objectref']);
         $property->initialization_refobject = 'languages';
         $property->initialization_store_prop = $this->initialization_store_prop;
