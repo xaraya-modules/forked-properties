@@ -177,6 +177,7 @@ Notes:
         } else {
             throw new Exception('No object passed to the listing property');
         }
+        /** @var DataObjectList $object */
 
         // itemtype 0 means all itemtypes
         $itemtype ??= 0;
@@ -520,7 +521,6 @@ Notes:
 
             default:
                 throw new Exception(xarML('Illegal operation: #(1)', $operation));
-                break;
         }
 
         //--- 12. Add categories to the query if they are active
@@ -657,7 +657,6 @@ Notes:
 
             default:
                 throw new Exception(xarML('Illegal operation: #(1)', $operation));
-                break;
         }
 
         //--- 19. Cache the dd object for reuse (if called)
