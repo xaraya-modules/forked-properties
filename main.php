@@ -44,6 +44,7 @@ class PagerProperty extends TextBoxProperty
     public $blocksize = 1;
     public $urltemplate = '';
     public $blockoptions = [];
+    public $module;
 
     public function __construct(ObjectDescriptor $descriptor)
     {
