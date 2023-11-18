@@ -32,7 +32,7 @@ class DateTimeProperty extends DataProperty
     public $initialization_timezone;
     public $initialization_start_year;
     public $initialization_end_year;
-    
+
     // Allow for dropdowns or calendar (datetime-local) in HTML5
     public $input_type                     = 'dropdown';
 
@@ -68,7 +68,7 @@ class DateTimeProperty extends DataProperty
                 [$isvalid, $minutes] = $this->fetchValue($name . '["minute"]');
                 [$isvalid, $seconds] = $this->fetchValue($name . '["second"]');
             }
-            if (!isset($years) ||!isset($months) ||!isset($days) ||!isset($hours) ||!isset($minutes) ||!isset($seconds)) {
+            if (!isset($years) || !isset($months) || !isset($days) || !isset($hours) || !isset($minutes) || !isset($seconds)) {
                 $this->objectref->missingfields[] = $this->name;
                 return null;
             }
@@ -84,7 +84,7 @@ class DateTimeProperty extends DataProperty
                 $value = $template_value;
             }
         }
-        
+
         // Adjust the value for a timezone offset, if it exists
         $value -= $this->getOffset();
 
@@ -101,7 +101,7 @@ class DateTimeProperty extends DataProperty
         if (!isset($data['onchange'])) {
             $data['onchange'] = null;
         } // let tpl decide what to do
-        $data['extraparams'] =!empty($extraparams) ? $extraparams : "";
+        $data['extraparams'] = !empty($extraparams) ? $extraparams : "";
 
         // Anything that is not explicitly 'calendar' is considered 'dropdown' (the default)
         if ($data['input_type'] == 'dropdown') {
@@ -133,11 +133,11 @@ class DateTimeProperty extends DataProperty
         return DataProperty::showInput($data);
     }
 
-/*
- *  This function outputs the following:
- *  date: The formated output string for display
- *  time: an array containing seconds, minutes, hours etc. of this date/time for further manipulation
- */
+    /*
+     *  This function outputs the following:
+     *  date: The formated output string for display
+     *  time: an array containing seconds, minutes, hours etc. of this date/time for further manipulation
+     */
     public function showOutput(array $data = [])
     {
         if (isset($data['format_type'])) {
@@ -199,7 +199,7 @@ class DateTimeProperty extends DataProperty
         }
 
         // Not a good idea to force to time()
-//        $value = $value == 0 ? time() : $value;
+        //        $value = $value == 0 ? time() : $value;
         if (empty($value)) {
             $value = 0;
         }
@@ -265,36 +265,36 @@ class DateTimeProperty extends DataProperty
         }
         return parent::showHidden($data);
     }
-    
-/*
- *  Support for time zone if it exists
- * This function gets the offset in seconds to universal time
- */
-    function getOffset()
-    {
-		if (empty($this->initialization_timezone)) {
-			return 0;
-		} else {
-			// Check for a xar function
-			if (strpos($this->initialization_timezone, 'xar') === 0) {
-            	@eval('$timezone_code = ' . $this->initialization_timezone .';');
-			} else {
-				// Do nothing nothing else for now
-				$timezone_code = $this->initialization_timezone;
-			}
 
-			try {
-				$timezone = new DateTimeZone($timezone_code);
-				$time = new DateTime("now", $timezone);
-				$offset = $timezone->getOffset($time);
-				return $offset;
-			} catch (Exception $e) {
-				return 0;
-			}
-		}
-		
-	}
-}
+    /*
+     *  Support for time zone if it exists
+     * This function gets the offset in seconds to universal time
+     */
+    public function getOffset()
+    {
+        if (empty($this->initialization_timezone)) {
+            return 0;
+        } else {
+            // Check for a xar function
+            if (strpos($this->initialization_timezone, 'xar') === 0) {
+                @eval('$timezone_code = ' . $this->initialization_timezone .';');
+            } else {
+                // Do nothing nothing else for now
+                $timezone_code = $this->initialization_timezone;
+            }
+
+            try {
+                $timezone = new DateTimeZone($timezone_code);
+                $time = new DateTime("now", $timezone);
+                $offset = $timezone->getOffset($time);
+                return $offset;
+            } catch (Exception $e) {
+                return 0;
+            }
+        }
+
+    }
+
 
     public function showConfiguration(array $data = [])
     {
