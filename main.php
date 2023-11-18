@@ -35,7 +35,7 @@ class DateProperty extends DataProperty
 
     // Allow for dropdowns or calendar (datetime-local) in HTML5
     public $input_type                     = 'dropdown';
-    
+
     public function __construct(ObjectDescriptor $descriptor)
     {
         parent::__construct($descriptor);
@@ -65,7 +65,7 @@ class DateProperty extends DataProperty
                 [$isvalid, $months] = $this->fetchValue($name . '["month"]');
                 [$isvalid, $days] = $this->fetchValue($name . '["day"]');
             }
-            if (!isset($years) ||!isset($months) ||!isset($days)) {
+            if (!isset($years) || !isset($months) || !isset($days)) {
                 $this->objectref->missingfields[] = $this->name;
                 return null;
             }
@@ -84,7 +84,7 @@ class DateProperty extends DataProperty
 
         // Adjust the value for a timezone offset, if it exists
         $value -= $this->getOffset();
-       
+
         return $this->validateValue($value);
     }
 
@@ -98,7 +98,7 @@ class DateProperty extends DataProperty
         if (!isset($data['onchange'])) {
             $data['onchange'] = null;
         } // let tpl decide what to do
-        $data['extraparams'] =!empty($extraparams) ? $extraparams : "";
+        $data['extraparams'] = !empty($extraparams) ? $extraparams : "";
 
         // Anything that is not explicitly 'calendar' is considered 'dropdown' (the default)
         if ($data['input_type'] == 'dropdown') {
@@ -153,10 +153,10 @@ class DateProperty extends DataProperty
         if (is_array($value)) {
             // An array was passed
             $timestamp = mktime(0, 0, 0, $value['month'], $value['day'], $value['year']);
-            
+
             // Adjust for timezone
             $timestamp += $this->getOffset();
-            
+
             $value['date'] = $this->format($timestamp);
             $data['value'] = $value;
         } else {
@@ -204,7 +204,7 @@ class DateProperty extends DataProperty
             $value = 0;
         }
         // Not a good ideea to force to time()
-//        $value = $value == 0 ? time() : $value;
+        //        $value = $value == 0 ? time() : $value;
         if (empty($value)) {
             $value = 0;
         }
@@ -258,7 +258,7 @@ class DateProperty extends DataProperty
                 $data['value'] = $this->value;
             }
             // Adjust for timezone
-        	  $data['value'] = !empty($value) ? $value : 0;
+            $data['value'] = !empty($value) ? $value : 0;
             $data['value'] += $this->getOffset();
             // The format is important here:
             $data['value'] = date('YYYY-mm-dd', $data['value']);
@@ -266,28 +266,28 @@ class DateProperty extends DataProperty
         return parent::showHidden($data);
     }
 
-    public function daymonth_isgt($timestamp=null)
+    public function daymonth_isgt($timestamp = null)
     {
         $this_date = $this->get_daymonth_timestamp();
         $that_date = $this->get_daymonth_timestamp($timestamp);
         return $that_date > $this_date;
     }
 
-    public function daymonth_islt($timestamp=null)
+    public function daymonth_islt($timestamp = null)
     {
         $this_date = $this->get_daymonth_timestamp();
         $that_date = $this->get_daymonth_timestamp($timestamp);
         return $that_date < $this_date;
     }
 
-    public function daymonth_iseq($timestamp=null)
+    public function daymonth_iseq($timestamp = null)
     {
         $this_date = $this->get_daymonth_timestamp();
         $that_date = $this->get_daymonth_timestamp($timestamp);
         return $that_date == $this_date;
     }
 
-    private function get_daymonth_timestamp($timestamp=null)
+    private function get_daymonth_timestamp($timestamp = null)
     {
         $date = new XarDateTime();
         $this_date = $this->getvaluearray($timestamp);
@@ -296,32 +296,32 @@ class DateProperty extends DataProperty
         $this_timestamp = $date->getTimestamp();
         return $this_timestamp;
     }
-/*
- *  Support for time zone if it exists
- * This function gets the offset in seconds to universal time
- */
-    function getOffset()
+    /*
+     *  Support for time zone if it exists
+     * This function gets the offset in seconds to universal time
+     */
+    public function getOffset()
     {
-		if (empty($this->initialization_timezone)) {
-			return 0;
-		} else {
-			// Check for a xar function
-			if (strpos($this->initialization_timezone, 'xar') === 0) {
-            	@eval('$timezone_code = ' . $this->initialization_timezone .';');
-			} else {
-				// Do nothing nothing else for now
-				$timezone_code = $this->initialization_timezone;
-			}
+        if (empty($this->initialization_timezone)) {
+            return 0;
+        } else {
+            // Check for a xar function
+            if (strpos($this->initialization_timezone, 'xar') === 0) {
+                @eval('$timezone_code = ' . $this->initialization_timezone .';');
+            } else {
+                // Do nothing nothing else for now
+                $timezone_code = $this->initialization_timezone;
+            }
 
-			try {
-				$timezone = new DateTimeZone($timezone_code);
-				$time = new DateTime("now", $timezone);
-				$offset = $timezone->getOffset($time);
-				return $offset;
-			} catch (Exception $e) {
-				return 0;
-			}
-		}
-		
-	}
+            try {
+                $timezone = new DateTimeZone($timezone_code);
+                $time = new DateTime("now", $timezone);
+                $offset = $timezone->getOffset($time);
+                return $offset;
+            } catch (Exception $e) {
+                return 0;
+            }
+        }
+
+    }
 }
