@@ -98,7 +98,7 @@ class DateProperty extends DataProperty
         if (!isset($data['onchange'])) {
             $data['onchange'] = null;
         } // let tpl decide what to do
-        $data['extraparams'] = !empty($extraparams) ? $extraparams : "";
+        $data['extraparams'] ??= "";
 
         // Anything that is not explicitly 'calendar' is considered 'dropdown' (the default)
         if ($data['input_type'] == 'dropdown') {
