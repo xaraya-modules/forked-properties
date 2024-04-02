@@ -105,21 +105,22 @@ class DateTimeProperty extends DataProperty
 
         // Anything that is not explicitly 'calendar' is considered 'dropdown' (the default)
         if ($data['input_type'] == 'dropdown') {
-            $data['value'] = $this->getvaluearray($data);
+		
+			$value = $this->getvaluearray($data);
             // Adjust for timezone
-            $data['value']['second'] += $this->getOffset();
-            $data['value']['timestamp'] += $this->getOffset();
-
-            if ($this->initialization_start_year == null) {
-                $this->initialization_start_year =  min($data['value']['year'], date("Y")) - 5;
-            }
-
-            if ($this->initialization_end_year == null) {
-                $this->initialization_end_year = max($data['value']['year'], date("Y")) + 5;
-            }
-
-            $data['start_year'] ??= $this->initialization_start_year;
-            $data['end_year'] ??= $this->initialization_end_year;
+            $value['timestamp'] += $this->getOffset();
+            $data['value'] = $value['timestamp'];
+			$data['value'] = $this->getvaluearray($data);
+			
+			if($this->initialization_start_year == null)            
+				$this->initialization_start_year =  min($data['value']['year'], date("Y")) - 5;
+		
+			if($this->initialization_end_year == null)          
+				$this->initialization_end_year = max($data['value']['year'], date("Y")) + 5;
+				
+			$data['start_year'] = isset($data['start_year'])? $data['start_year'] : $this->initialization_start_year;
+			$data['end_year'] = isset($data['end_year'])? $data['end_year'] : $this->initialization_end_year;        
+        
         } else {
             // Use the datetime-local input
             if (!isset($data['value'])) {
