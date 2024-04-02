@@ -22,7 +22,7 @@
                     </pre>
                 <h4>Standalone (pass from code, under construction)</h4>
                     <pre>
-    $mypager = DataPropertyMaster::getProperty(array('name' => 'pager'));
+    $mypager = DataPropertyMaster::getProperty(['name' => 'pager']);
     $mypager->checkInput('mypager');
     $data['mypager'] = $mypager;
 
