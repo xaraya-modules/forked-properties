@@ -1,0 +1,62 @@
+<div>
+            <h2>Listing Property</h2>
+                <h3>Description</h3>
+                <p>
+                    The Listing dataproperty is a standalone widget that lets you display dataobject items in tabular form. It includes options for:
+                <ul>
+                    <li>
+                        Full text search on any of the displayed fields
+                    </li>
+                    <li>
+                        Filtering by initial letter of the key field
+                    </li>
+                    <li>
+                        A pager for listings with many items
+                    </li>
+                </ul>
+                    The property uses a set of templates that can be selectively overridden to change parts of the display. These include links to add, display, modify and delete. The links by default call the respective GUI functions of the module containing the listing property tag. Clicking on a column header sorts by that column alternately ascending and descending.
+                </p>
+                <p>
+                    The Listing dataproperty only supports objects with flat table datasources. For objects containing dataproperties with other datasources, those properties are ignored.
+                </p>
+                <h3>Usage</h3>
+                <h4>Standalone</h4>
+                    <pre>
+    &lt;xar:data-input type="listing" <i>[attr1="value1",...]</i> /&gt;
+                    </pre>
+            <h3>Examples</h3>
+                    <pre>
+    &lt;xar:data-input type="listing" object="$users" /&gt;
+    &lt;xar:data-input type="listing" objectname="roles_users" fieldlist="name,uname' /&gt;
+                    </pre>
+            <h3>Attributes</h3>
+            <ul>
+                <li>
+                    <strong>object</strong>: dataobject&#160;A list object the listing is based on
+                </li>
+                <li>
+                    <strong>objectname</strong>: string&#160;The name of a list object the listing is based on. This attribute overrides the object attribute (if both are present).
+                </li>
+                <li>
+                    <strong>fieldlist</strong>: string list&#160;A comma separated list of property names to be displayed. If this attribute is absent, then all the active fields of the object are displayed. Unrecognized property names are ignored.
+                </li>
+                <li>
+                    <strong>show_primary</strong>: boolean [default=false]&#160;Display the primary field of the object in the listing.
+                </li>
+                <li>
+                    <strong>show_search</strong>: boolean [default=true]&#160;Display a field for full text search.
+                </li>
+                <li>
+                    <strong>show_alphabet</strong>: boolean [default=true]&#160;Display a filter for display by first letter of the key field.
+                </li>
+                <li>
+                    <strong>showall_tab</strong>: boolean [default=true]&#160;Display an "All" link on the alpha filter.
+                </li>
+                <li>
+                    <strong>showother_tab</strong>: boolean [default=true]&#160;Display an "Other" link on the alpha filter.
+                </li>
+                <li>
+                    <strong>show_items_per_page</strong>: boolean [default=false]&#160;Display a dropdown in the pager to allow the user to set the number of items displayed.
+                </li>
+            </ul>
+        </div>

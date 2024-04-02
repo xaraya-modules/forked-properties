@@ -1,0 +1,27 @@
+<tr>
+        {% set paramarray = {'op': 'column'} %}
+        {% if letter %}
+            {% set dummy = 1;paramarray['letter'] = letter %}
+        {% endif %}
+        {{ include('@' ~ module ~ '/includes/listing_headerprefix.html.twig') }}
+        {% for field in fieldnames|keys %}
+            {% set column = fieldnames[field] %}
+            {% set formfieldstate = formfieldstates[field] %}
+            {% set dummy = 1;paramarray['order'] = column %}
+            {% if (column == primaryalias) and not show_primary %}
+                <xar:continue />
+            {% endif %}
+            {% if formfieldstate != 'hidden' %}
+                <th>
+                    {# <!-- Output field --> #}
+                    {% set url = xar_currenturl(paramarray) %}
+                    <a href="{{ url }}" class="refresh_listing" alt="Click to order by this field" title="Order by {{ column }}">
+                        {{ fieldlabels.column }}
+                    </a>
+                    {% set subdata = array_merge(params,{'column': column}) %}
+                    {{ include('@' ~ module ~ '/includes/sortarrows.html.twig', subdata) }}
+                </th>
+            {% endif %}
+        {% endfor %}
+        {{ include('@' ~ module ~ '/includes/listing_headersuffix.html.twig') }}
+    </tr>

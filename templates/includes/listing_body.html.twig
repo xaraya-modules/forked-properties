@@ -1,0 +1,14 @@
+{% for loop_key1, loop_item1 in items %}{% set loop_index1 = loop.index %}
+        {% if ((loop_index1 + 1) % 2) %}
+            {% set item_class = 'xar-alt' %}
+        {% else %}
+            {% set item_class = 'xar-norm' %}
+        {% endif %}
+        {% if xar_coremethod('xarUser', 'isLoggedIn') %}
+            {% set currentuserid = xar_uservar('id'); %}
+        {% endif %}
+
+        {% set loopindex = loop_index1 %}
+        {% set loopitem = loop_item1 %}
+        {{ include('@' ~ module ~ '/includes/listing_row.html.twig') }}
+    {% endfor %}

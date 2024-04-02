@@ -1,0 +1,9 @@
+{% if order == column %}
+        {% if sort == 'ASC' %}
+            {% set label = 'Sorted Ascending' %}
+            <img src="{{ xar_imageurl('s_asc.png', 'property','listing') }}" alt="{{ label }}" title="{{ label }}"/>
+        {% elseif sort == 'DESC' %}
+            {% set label = 'Sorted Descending' %}
+            <img src="{{ xar_imageurl('s_desc.png', 'property','listing') }}" alt="{{ label }}" title="{{ label }}"/>
+        {% endif %}
+    {% endif %}
