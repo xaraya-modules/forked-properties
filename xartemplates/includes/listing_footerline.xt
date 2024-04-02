@@ -9,8 +9,8 @@
                 <input type="hidden" name="redirecttarget" id="redirecttarget"/>
 
                 <xar:set name="options">array(
-                    array('id'=>'', 'name'=>'Select action'),
-                    array('id'=>'10','name'=>'Delete Selected Items')
+                    ['id' => '', 'name' => 'Select action'],
+                    ['id' => '10','name' => 'Delete Selected Items']
                     )
                 </xar:set>
 
