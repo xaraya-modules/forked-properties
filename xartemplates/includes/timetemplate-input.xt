@@ -62,8 +62,8 @@
             <xar:if condition="isset($format) AND ($format eq 'ampm')">
                 &#160;
                 <xar:set name="ampmoptions">array(
-                                                array('id' => 'am', 'name' => 'am'),
-                                                array('id' => 'pm', 'name' => 'pm'),
+                                                ['id' => 'am', 'name' => 'am'],
+                                                ['id' => 'pm', 'name' => 'pm']
                                                 )
                 </xar:set>
                 <xar:data-input type="dropdown" name="$nameampm" id="$idampm1" tabindex="$tabindex" value="$value['ampm']" options="$ampmoptions" onchange="$evt_change"/>
@@ -83,8 +83,8 @@
             </xar:if>
             <xar:if condition="isset($format) AND ($format eq 'ampm')">
                 <xar:set name="ampmoptions">array(
-                                                array('id' => 'am', 'name' => 'am'),
-                                                array('id' => 'pm', 'name' => 'pm'),
+                                                ['id' => 'am', 'name' => 'am'],
+                                                ['id' => 'pm', 'name' => 'pm']
                                                 )
                 </xar:set>
                 <xar:data-input type="dropdown" name="$nameampm" id="$idampm2" tabindex="$tabindex" value="$value['ampm']" options="$ampmoptions" onchange="$evt_change"/>
