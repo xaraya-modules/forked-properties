@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <form  action="#xarController::URL('dynamicdata','user','property',array('prop' => 'listing','act' => 'bulk_action'))#" method="post" enctype="application/x-www-form-urlencoded" onsubmit = "listing_getchecked('idlist');document.getElementById('redirecttarget').value = this.value;">
+    <form  action="#xarController::URL('dynamicdata','user','property',['prop' => 'listing','act' => 'bulk_action'))#" method="post" enctype="application/x-www-form-urlencoded" onsubmit = "listing_getchecked('idlist');document.getElementById('redirecttarget'].value = this.value;">
         <xar:access level="700">
             <xar:if condition="$total gt 0">
                 <div style="text-align:center; padding-top:10px;">
@@ -18,8 +18,8 @@
                     <input type="hidden" name="redirecttarget" id="redirecttarget"/>
 
                     <xar:set name="options">array(
-                        array('id'=>'', 'name'=>'Select action'),
-                        array('id'=>'10','name'=>'Delete Selected Items')
+                        ['id' => '', 'name' => 'Select action'],
+                        ['id' => '10','name' => 'Delete Selected Items']
                         )
                     </xar:set>
 

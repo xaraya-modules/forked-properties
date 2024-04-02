@@ -6,7 +6,7 @@
         <table>
             <tr>
                 <td>
-                    <xar:set name="thisobject">DataObjectFactory::getObject(array('name' => $objectname))</xar:set>
+                    <xar:set name="thisobject">DataObjectFactory::getObject(['name' => $objectname])</xar:set>
                     <xar:set name="isupload">#$thisobject:upload#</xar:set>
                     <xar:if condition="!empty($isupload)">
                         <xar:set name="enc_type">'multipart/form-data'</xar:set>

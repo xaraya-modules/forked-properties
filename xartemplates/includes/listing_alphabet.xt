@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:if condition="$show_alphabet AND ($show_alphabet != 'false')">
+    <xar:if condition="$show_alphabet AND ($show_alphabet ne 'false')">
         <xar:style scope="property" property="listing" file="alphapager"/>
         <div class="listingsalphapager-wrapper">
             <div class="listings-alphapager xar-padding-thick xar-border-thin">
@@ -16,7 +16,7 @@
                         </xar:if>
                         <li class="#$class#">
                             <!-- Want to know if this is a letter search as opposed to a generic search-->
-                            <a href="#xarServer::getCurrentURL(array('letter' =>'All', 'op' => 'letter'))#" class="refresh_listing">
+                            <a href="#xarServer::getCurrentURL(['letter' => 'All', 'op' => 'letter')]#" class="refresh_listing">
                                 All
                             </a>
                         </li>
@@ -28,7 +28,7 @@
                             <xar:set name="class">''</xar:set>
                         </xar:if>
                         <li class="#$class#">
-                            <a href="#xarServer::getCurrentURL(array('letter' => $ltr, 'op' => 'letter'))#" class="refresh_listing">#$ltr#</a>
+                            <a href="#xarServer::getCurrentURL(['letter' => $ltr, 'op' => 'letter')]#" class="refresh_listing">#$ltr#</a>
                         </li>
                     </xar:foreach>
                     <xar:if condition="$showother_tab">
@@ -38,7 +38,7 @@
                             <xar:set name="class">''</xar:set>
                         </xar:if>
                         <li class="#$class#">
-                            <a href="#xarServer::getCurrentURL(array('letter' => 'Other', 'op' => 'letter'))#" class="refresh_listing">
+                            <a href="#xarServer::getCurrentURL(['letter' => 'Other', 'op' => 'letter')]#" class="refresh_listing">
                                 Other
                             </a>
                         </li>

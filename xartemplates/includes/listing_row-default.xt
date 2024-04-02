@@ -23,7 +23,7 @@
                     <xar:else />
                         <!-- Output field -->
                         <xar:if condition="$field eq $keyfieldalias">
-                            <a href="#xarController::URL($module,'user','display',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname, 'tplmodule' => $module))#">
+                            <a href="#xarController::URL($module,'user','display',['itemid' =>$loopitem[$primaryalias], 'name' => $objectname, 'tplmodule' => $module])#">
                                 <xar:data-output property="$properties[$column]" value="$value"/>
                             </a>
                         <xar:else />

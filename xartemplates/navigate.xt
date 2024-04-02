@@ -9,7 +9,7 @@
     <xar:if condition="!empty($direction) AND !empty($itemid) AND !empty($listing_id)">
         <xar:set name="dummy">sys::import('properties.listing.navigate')</xar:set>
         <xar:set name="url">navigate($listing_id, $itemid, $direction, $index_name, $url)</xar:set>
-        <xar:if condition="$url != false">
+        <xar:if condition="$url ne false">
             <xar:if condition="$direction eq 'forward'">
                 <xar:var name="label">Next</xar:var>
                 <a href="#$url#" title="#$label#">

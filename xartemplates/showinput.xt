@@ -54,7 +54,7 @@
             <p class="xar-align-center">There are no items selected</p>
         </xar:if>
         <xar:template file="listing_footerline" module="$module" property="listing"/>
-        <xar:if condition="($show_bulk AND ($show_bulk != 'false')) AND ($total gt 0)">
+        <xar:if condition="($show_bulk AND ($show_bulk ne 'false')) AND ($total gt 0)">
             <xar:template file="listing_bulk_operations" module="$module" property="listing"/>
         </xar:if>
     </xar:ajax-listing>
