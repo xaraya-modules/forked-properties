@@ -1,0 +1,46 @@
+{% if onchange is not null %}
+      {% set evt_change = onchange %}
+    {% else %}
+      {% set evt_change = 'return true;' %}
+    {% endif %}
+    {% if style is null %}
+        {% set style = '' %}
+    {% endif %}
+
+    {% if layout == 'default' or layout == '' %}
+        {% if address_components %}
+            {% for k, v in address_components %}
+                <div class="xar-row">
+                    {% if v['name'] %}
+                        <div class="xar-col">
+                            {{ xar_data_label({label: v['name'], for: "id"}) }}
+                        </div>
+                    {% endif %}
+                    {% for part in value %}
+                        {% if part['id'] == v['id'] %}
+                            <div class="xar-col">
+                                {# <!-- Display the raw value for debugging --> #}
+                                {# <!-- {% set dummy = var_dump(rawvalue) %} --> #}
+                                {% set namestring = name ~ '[' ~ v['id'] ~ ']' %}
+                                {% if part['id'] == 'country' %}
+                                    {% if not default_country %}
+                                        {% set firstline = 'Choose a country' %}
+                                        {% set firstline = "0,firstline" %}
+                                        {{ xar_data_input({property: countrylisting, name: namestring, id: namestring, value: part['value'], firstline: firstline}) }}
+                                    {% else %}
+                                        {{ xar_data_input({property: countrylisting, name: namestring, id: namestring, value: part['value']}) }}
+                                    {% endif %}
+                                {% else %}
+                                    {{ xar_data_input({type: "textbox", name: namestring, id: namestring, value: part['value']}) }}
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% elseif layout == 'country' %}
+        {{ include('@' ~ module ~ '/includes/' ~ country_template ~ '.html.twig') }}
+    {% else %}
+    {% endif %}
+    {{ include('@base/includes/dataproperty_additions.html.twig') }}

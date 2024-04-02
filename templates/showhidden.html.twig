@@ -1,0 +1,22 @@
+{% if layout == 'default' or layout == '' %}
+        {% if address_components %}
+            {% for k, v in address_components %}
+                {% for part in value %}
+                    {% if part['id'] == v['id'] %}
+                        {# <!-- Display the raw value for debugging --> #}
+                        {# <!-- {% set dummy = var_dump(rawvalue) %} --> #}
+                        {% set namestring = name ~ '_' ~ v['id'] %}
+                        {% if part['id'] == 'country' %}
+                            {{ xar_data_input({type: "countrylisting", name: namestring, id: namestring, value: part['value'], hidden: "hidden"}) }}
+                        {% else %}
+                            {{ xar_data_input({type: "textbox", name: namestring, id: namestring, value: part['value'], hidden: "hidden"}) }}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+    {% elseif layout == 'country' %}
+        {{ include('@' ~ module ~ '/includes/' ~ country_template ~ '.html.twig') }}
+    {% else %}
+    {% endif %}
+    {{ include('@base/includes/dataproperty_additions.html.twig') }}

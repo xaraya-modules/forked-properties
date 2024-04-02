@@ -1,0 +1,56 @@
+<div>
+        <h2>Address Property</h2>
+            <h3>Description</h3>
+            <p>
+                The Address dataproperty lets you manage mailing addresses. A mailing address has the folowing parts:
+            <ul>
+                <li>
+                    One or more lines for street, P.O. Box, apartment etc.
+                </li>
+                <li>
+                    City
+                </li>
+                <li>
+                    Province or state
+                </li>
+                <li>
+                    Postal code
+                </li>
+                <li>
+                    Country
+                </li>
+            </ul>
+            </p>
+
+            <h3>Usage</h3>
+            <h4>Standalone</h4>
+                <pre>
+    &lt;xar:data-input type="address" <em>[attr1="value1",...]</em> /&gt;
+    &lt;xar:data-output type="address" <em>[attr1="value1",...]</em> /&gt;
+                </pre>
+            <h4>Bound</h4>
+                <pre>
+    &lt;xar:data-input property="$properties['address']" <em>[attr1="value1",...]</em> /&gt;
+    &lt;xar:data-output property="$properties['address']" <em>[attr1="value1",...]</em> /&gt;
+                </pre>
+            <h3>Attributes</h3>
+            <ul>
+                <li>
+                    <strong>rows</strong>: integer [default=2]&#160;The number of rows displayed for the street part of the address
+                </li>
+                <li>
+                    <strong>show_city</strong>: boolean [default=true]&#160;Display the city part of the address
+                </li>
+                <li>
+                    <strong>show_province</strong>: boolean [default=true]&#160;Display the state/province part of the address
+                </li>
+                <li>
+                    <strong>show_postal_code</strong>: boolean [default=true]&#160;Display the postal code part of the address
+                </li>
+                <li>
+                    <strong>show_country</strong>: boolean [default=true]&#160;Display the country part of the address
+                </li>
+            </ul>
+            <h3>Methods</h3>
+            <strong>getValueArray()</strong>: Returns an associative array of the address components, with the keys line_{1..n}, city, province, postal_code, country.
+        </div>

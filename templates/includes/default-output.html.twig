@@ -1,0 +1,58 @@
+<span class="adr">
+        {% set newline = 0 %}
+        {% if value['company']['value'] %}
+            <span class="company-address">{{ value['company']['value'] }}</span>
+            {% set newline = 1 %}
+        {% endif %}
+
+        {% if value['street']['value'] %}
+            {% if newline %}
+                <br/>
+                {% set newline = 0 %}
+            {% endif %}
+            <span class="street-address">{{ value['street']['value'] }}</span>
+            {% set newline = 1 %}
+        {% endif %}
+
+        {% if value['street2']['value'] %}
+            {% if newline %}
+                <br/>
+                {% set newline = 0 %}
+            {% endif %}
+            <span class="street-address">{{ value['street2']['value'] }}</span>
+            {% set newline = 1 %}
+        {% endif %}
+
+        {% if value['city']['value'] %}
+            {% if newline %}
+                <br/>
+                {% set newline = 0 %}
+            {% endif %}
+            <span class="locality">{{ value['city']['value'] }}</span>
+        {% endif %}
+
+        {% if value['region']['value'] %}
+            {% if newline %}
+                <br/>
+                {% set newline = 0 %}
+            {% endif %}
+            {% if value['city'] %},{% endif %}
+            <span class="region">{{ xar_data_output({type: "province", value: value['region']['value'], country: value['country']['value']}) }}</span>
+        {% endif %}
+
+        {% if value['postal_code']['value'] %}
+            {% if newline %}
+                <br/>
+                {% set newline = 0 %}
+            {% else %}&#160;{% endif %}
+            <span class="postal-code">{{ value['postal_code']['value'] }}</span>
+        {% endif %}
+
+        {% if value['country']['value'] %}
+            {% if not newline %}
+                <br/>
+                {% set newline = 0 %}
+            {% endif %}
+            <span class="country">{{ xar_data_output({type: "countrylisting", value: value['country']['value']}) }}</span>
+        {% endif %}
+    </span>

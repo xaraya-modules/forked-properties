@@ -1,0 +1,15 @@
+{% if onchange is not null %}
+      {% set evt_change = onchange %}
+    {% else %}
+      {% set evt_change = 'return true;' %}
+    {% endif %}
+    {% if style is null %}
+        {% set style = '' %}
+    {% endif %}
+
+    {% if layout == 'default' or layout == '' %}
+        {{ value }}
+    {% elseif layout == 'country' %}
+        {{ include('@' ~ module ~ '/includes/' ~ country_template ~ '.html.twig') }}
+    {% else %}
+    {% endif %}

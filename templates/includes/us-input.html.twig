@@ -1,0 +1,98 @@
+{% if value['company'] %}
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="{{ name }}[company]">
+                    {{ value.company.label }}
+                </label>
+            </div>
+            <div class="xar-col">
+                <input type="text" name="{{ name }}[company]" id="{{ id }}_company" value="{{ value['company']['value'] }}"/>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if value['street'] %}
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="{{ name }}[street]">
+                    {{ value.street.label }}
+                </label>
+            </div>
+            <div class="xar-col">
+                <input type="text" name="{{ name }}[street]" id="{{ id }}_street" value="{{ value['street']['value'] }}"/>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if value['street2'] %}
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="{{ name }}[street2]">
+                    {{ value.street2.label }}
+                </label>
+            </div>
+            <div class="xar-col">
+                <input type="text" name="{{ name }}[street2]" id="{{ id }}_street2" value="{{ value['street2']['value'] }}"/>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if value['city'] %}
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="{{ name }}_city">
+                    {{ value.city.label }}
+                </label>
+            </div>
+            <div class="xar-col">
+                <input type="text" name="{{ name }}[city]" id="{{ id }}_city" value="{{ value['city']['value'] }}"/>
+            </div>
+        </div>
+    {% endif %}
+    
+    {% if value['region'] %}
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="{{ name }}[region]">
+                    State
+                </label>
+            </div>
+            <div class="xar-col">
+                {% set firstline = 'Choose a state' %}
+                {% set firstline = "0,firstline" %}
+                {% set regionname = name ~ '[region]' %}
+                {% set regionid = id ~ '_region' %}
+                {{ xar_data_input({type: "province", name: regionname, id: regionid, value: value['region']['value'], country: value['country']['value'], firstline: firstline}) }}
+            </div>
+        </div>
+    {% endif %}
+    
+    {% if value['postal_code'] %}
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="{{ name }}[postal_code]">
+                    ZIP Code
+                </label>
+            </div>
+            <div class="xar-col">
+                <input type="text" name="{{ name }}[postal_code]" id="{{ id }}_postal_code" value="{{ value['postal_code']['value'] }}"/>
+            </div>
+        </div>
+    {% endif %}
+    
+    {% if value['country'] %}
+        <div class="xar-row">
+            <div class="xar-col">
+                <label for="{{ name }}[country]">
+                    {{ value.country.label }}
+                </label>
+            </div>
+            <div class="xar-col">
+                {% set firstline = 'Choose a country' %}
+                {% set firstline = "0,firstline" %}
+                {% set countryname = name ~ '[country]' %}
+                {% set countryid = id ~ '_country' %}
+                {{ xar_data_input({type: "countrylisting", name: countryname, id: countryid, value: value['country']['value'], firstline: firstline}) }}
+            </div>
+        </div>
+    {% endif %}
