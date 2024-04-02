@@ -1,0 +1,27 @@
+<div>
+            <h2>IconDropdown Property</h2>
+                <h3>Description</h3>
+                <p>
+                    The IconDropdown dataproperty is a dropdown that in its output display shows an image icon. The icons for for the dropdown values can be configured.
+                </p>
+                <h3>Usage</h3>
+                <h4>Standalone</h4>
+                    <pre>
+    &lt;xar:data-input type="icondropdown" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-output type="icondropdown" <i>[attr1="value1",...]</i> /&gt;
+                    </pre>
+            <h4>Bound</h4>
+                <pre>
+    &lt;xar:data-input property="$properties['icondropdown']" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-output property="$properties['icondropdown']" <i>[attr1="value1",...]</i> /&gt;
+                </pre>
+            <h3> Configuration Values</h3>
+            <ul>
+                <li>
+                    <strong>icon_directory</strong>: string [default="set1"]&#160;The directory below the property's template directory where the icon files are found.
+                </li>
+                <li>
+                    <strong>icon_options</strong>: string [default="0,red-12.png;1,yellow-12-png;2,orange-12.png;3,green-12.png;4,blue-12.png;5,clear-12.png;"]&#160;A simple array description that assigns dropdown values to icon files.
+                </li>
+            </ul>
+        </div>

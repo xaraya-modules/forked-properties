@@ -71,11 +71,21 @@ class IconDropdownProperty extends SelectProperty
             $result = xarVar::prepForDisplay($result);
         }
         $data['icon_option'] = $result;
+        $data['iconpath'] = null;
+        if (!empty($data['icon_directory']) && !empty($data['icon_option'])) {
+            $iconpath = sys::code() . 'properties/icondropdown/xartemplates/icons/' . $data['icon_directory'] . '/' . $data['icon_option'];
+            if (file_exists($iconpath) && !is_dir($iconpath)) {
+                $data['iconpath'] = $iconpath;
+            }
+        }
         return parent::showOutput($data);
     }
 
     public function getOptions()
     {
+        if (is_array($this->initialization_icon_options)) {
+            return $this->initialization_icon_options;
+        }
         $options = [];
         $lines = explode(';', $this->initialization_icon_options);
         // remove the last (empty) element
