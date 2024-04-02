@@ -1,0 +1,36 @@
+<form  action="{{ xar_moduleurl('dynamicdata','user','property',{'prop': 'listing','act': 'bulk_action'}) }}" method="post" enctype="application/x-www-form-urlencoded" onsubmit = "listing_getchecked('idlist');document.getElementById('redirecttarget').value = this.value;">
+        <xar:access level="700">
+            {% if total > 0 %}
+                <div style="text-align:center; padding-top:10px;">
+                
+					{# <!-- URLs for custom functions --> #}
+					{# <!-- We set a line for each function: 
+						- the name contains an ID in the dropdown below
+						- the name is the URL (in Xaraya format) that will be executed
+					--> #}
+					{# <!--
+					<input type="hidden" name="funcurl_99" id="funcurl_99" value="modulefoo_adminapi_funcbar"/>
+					--> #}
+
+                    <input type="hidden" name="idlist" id="idlist"/>
+                    <input type="hidden" name="redirecttarget" id="redirecttarget"/>
+
+                    {% set options = [
+                        {'id': '', 'name': 'Select action'},
+                        {'id': '10', 'name': 'Delete Selected Items'}
+                        ] %}
+
+                    &#160;
+                    {{ xar_data_input({type: "dropdown", name: "operation", options: options}) }}&#160;
+                    {% set label = 'Execute' %}
+                    {{- xar_button({type: "submit", label: label}) -}}&#160;
+                    {{ xar_javascript({filename: "checkall.js", property: "listing", position: "body"}) }}
+                    <a href="javascript:listing_checkall(true)">Check All</a>&#160;|&#160;
+                    <a href="javascript:listing_checkall(false)">Uncheck All</a>
+                </div>
+            {% endif %}
+        </xar:access>
+        <input type="hidden" name="returnurl" id="returnurl" value="{{ xar_currenturl() }}"/>
+        <input type="hidden" name="objectname" id="objectname" value="{{ objectname }}"/>
+        <input type="hidden" name="localmodule" id="localmodule" value="{{ module }}"/>
+    </form>

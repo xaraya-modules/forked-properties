@@ -1,0 +1,67 @@
+{% set foo = xar_coremethod('xarVar', 'fetch', ['itemid','int',itemid,0,xarVar..NOT_REQUIRED]) %}
+    {% set itemidvalue = loopitem[primaryalias] %}
+    {% if itemid is not null and (itemid == itemidvalue) %}
+        {% set colspan = fields|length %}
+        <tr class="{{ item_class }}">
+            <td colspan="{{ colspan }}">
+                {% if xar_coremethod('xarUser', 'isLoggedIn') and allowedit %}
+                    {% set thisobject = DataObjectFactory..getObject({'name': objectname}) %}
+                    {% set isupload = thisobject.upload %}
+                    {% if isupload %}
+                        {% set enc_type = 'multipart/form-data' %}
+                    {% else %}
+                        {% set enc_type = 'application/x-www-form-urlencoded' %}
+                    {% endif %}
+
+                    <form method="post" action="{{ xar_moduleurl(module,'user','modify')" enctype="{{ enc_type }}">
+                        <xar.data-form name="objectname" itemid="itemid" tplmodule="tplmodule" template="objectname"/>
+                        {{ xar_data_form({name: objectname, itemid: itemid, tplmodule: tplmodule, template: objectname}) }}
+                        <div>
+                            <input type="hidden" name="authid" id="authid" value="{{ xar_security_authkey() }}"/>
+                            <input type="hidden" name="confirm" id="confirm" value="1"/>
+                            <input type="hidden" name="objectid" id="objectid" value="{{ thisobject.objectid }}"/>
+                            <input type="hidden" name="itemid" id="itemid" value="{{ itemid }}/>
+                            <input type="hidden" name="tplmodule" id="tplmodule" value="{{ tplmodule }}"/>
+                            <input type="hidden" name="return_url" id="return_url" value="{{ xar_currentutl({'itemid': 0}) }}"/>
+                            <input type="submit" value=" }}{{ xar_translate('Save') }}" class="xar-margin-thickleft"/>
+                        </div>
+                    </form>
+                {% elseif allowread %}
+                    {{ xar_data_display({name: objectname, itemid: itemid, tplmodule: tplmodule}) }}
+                {% endif %}
+            </td>
+        </tr>
+    {% else %}
+        <tr class="{{ item_class }}">
+            {{ include('@' ~ module ~ '/includes/listing_rowprefix.html.twig') }}
+            {% for field in fieldnames|keys %}
+                {% set formfieldname = formfieldnames[field] ~ '[' ~ loopindex ~ ']' %}
+                {% set formfieldid = formfieldnames[field] ~ '_' ~ loopindex %}
+                {% set formfieldstate = formfieldstates[field] %}
+                {% set column = fieldnames[field] %}
+                {% set value = loopitem[column] %}
+                {% if column == primaryalias and not show_primary %}
+                    <xar.continue />
+                {% endif %}
+                <td class="{{ item_class }} ">
+                    {% if formfieldstate == 'hidden' %}
+                        {# <!-- Hidden field --> #}
+                        <xar.data-input property="properties[column]" name="formfieldname" id="formfieldid" value="value" hidden="hidden"/>                    
+                    {% elseif formfieldstate == 'input' %}
+                        {# <!-- Input field --> #}
+                        <xar.data-input property="properties[column]" name="formfieldname" id="formfieldid" value="value"/>                    
+                    {% else %}
+                        {# <!-- Output field --> #}
+                        {% if field == keyfieldalias and allowread %}
+                            <a href=" }}xarServer::getCurrentURL(['itemid' => $itemidvalue])#">
+                                {{ xar_data_output({property: properties[column], value: value, layout: "listing"}) }}
+                            </a>
+                        {% else %}
+                            {{ xar_data_output({property: properties[column], value: value, layout: "listing"}) }}
+                        {% endif %}
+                    {% endif %}
+                </td>
+            {% endfor %}
+            {{ include('@' ~ module ~ '/includes/listing_rowsuffix.html.twig') }}
+        </tr>
+    {% endif %}

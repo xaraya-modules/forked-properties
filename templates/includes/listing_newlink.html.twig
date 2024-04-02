@@ -1,0 +1,4 @@
+<xar:access level="600">
+        {% set returnurl = xar_moduleurl(module,'user','view') %}
+        <a style="font-weight:bold;" href ="{{ xar_moduleurl(module,'admin','new',{'name': objectname, 'tplmodule': module}) }}">Add A New Item</a>
+    </xar:access>

@@ -1,0 +1,27 @@
+{% set url = xar_currenturl(params) %}
+        <form action="{{ url }}" method="post" style="clear: both">
+            {% if (items_per_page < total) %}
+                <div class="xar-align-center">
+                    {{ xar_data_input({type: "pager", url: url, items_per_page: items_per_page, startnum: startnum, itemstotal: total}) }}
+                </div>
+            {% endif %}
+            {% if show_items_per_page %}
+                <div class="xar-align-center">
+                    {% set options = [
+                        {'id': 10, 'name': 10},
+                        {'id': 20, 'name': 20},
+                        {'id': 30, 'name': 30},
+                        {'id': 40, 'name': 40},
+                        {'id': 50, 'name': 50},
+                        {'id': 100, 'name': 100},
+                        {'id': 200, 'name': 200},
+                        {'id': 300, 'name': 300},
+                        {'id': 400, 'name': 400},
+                        {'id': 500, 'name': 500}
+                        ] %}
+                    Show&#160;
+                    {{ xar_data_input({type: "dropdown", name: "items_per_page", value: items_per_page, options: options, onchange: "javascript: submit()", style: "width: 50px"}) }}
+                    &#160;items
+                </div>
+            {% endif %}
+        </form>

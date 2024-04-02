@@ -1,0 +1,20 @@
+{% if show_search %}
+        <form method="post" action="{{ xar_currenturl() }}">
+            {% set search = search is not null ? search : '' %}
+            {% set searchclass = 'xar-floatleft xar-fullwidth xar-align-center' %}
+            <div class="{{ searchclass }}" style="height:50px;padding:0 10px;margin:0 5px 0 0;">
+                <input type="hidden" name="items_per_page" id="items_per_page" value="{{ items_per_page }}"/>
+                <input type="hidden" name="letter" id="letter" value=""/>
+                <input type="hidden" name="op" id="op" value="submit"/>
+                Search: <input type="text" name="search" id="search" value="" size="40" maxlength="255" tabindex="1"/>
+                &#160;
+                {% set label = 'Go' %}
+                {{- xar_button({type: "submit", label: label}) -}}
+                {% if msg %}
+                    <div style="height:auto;padding:0 10px;margin:0 5px 0 0;">
+                        Selected on: {{ xar_prep_display(msg) }}
+                   </div>
+                {% endif %}
+            </div>
+        </form>
+    {% endif %}

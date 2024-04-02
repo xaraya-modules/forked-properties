@@ -1,0 +1,47 @@
+{% if show_alphabet and (show_alphabet != 'false') %}
+        {{ xar_style({scope: "property", property: "listing", file: "alphapager"}) }}
+        <div class="listingsalphapager-wrapper">
+            <div class="listings-alphapager xar-padding-thick xar-border-thin">
+                <span>
+                    Filter By Letter:
+                </span>
+                <ul>
+                    {% if showall_tab %}
+                        {% if letter == '' %}
+                            {% set class = 'listings-letter-active' %}
+                        {% else %}
+                            {% set class = '' %}
+                        {% endif %}
+                        <li class="{{ class }}">
+                            {# <!-- Want to know if this is a letter search as opposed to a generic search--> #}
+                            <a href="{{ xar_currenturl({'letter': 'All', 'op': 'letter'}) }}" class="refresh_listing">
+                                All
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% for ltr in alphabet %}
+                        {% if letter == ltr %}
+                            {% set class = 'listings-letter-active' %}
+                        {% else %}
+                            {% set class = '' %}
+                        {% endif %}
+                        <li class="{{ class }}">
+                            <a href="{{ xar_currenturl({'letter': ltr, 'op': 'letter'}) }}" class="refresh_listing">{{ ltr }}</a>
+                        </li>
+                    {% endfor %}
+                    {% if showother_tab %}
+                        {% if letter == 'Other' %}
+                            {% set class = 'listings-letter-active' %}
+                        {% else %}
+                            {% set class = '' %}
+                        {% endif %}
+                        <li class="{{ class }}">
+                            <a href="{{ xar_currenturl({'letter': 'Other', 'op': 'letter'}) }}" class="refresh_listing">
+                                Other
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}

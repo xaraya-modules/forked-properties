@@ -1,0 +1,48 @@
+{% set thispageno = items|length %}
+    {% if layout == 'combined' %}
+        <div style="clear: both"></div>
+        <table>
+            <tr>
+                <td>
+                    {% set thisobject = xar_data_object({'name': objectname}) %}
+                    {% set isupload = thisobject.upload %}
+                    {% if isupload %}
+                        {% set enc_type = 'multipart/form-data' %}
+                    {% else %}
+                        {% set enc_type = 'application/x-www-form-urlencoded' %}
+                    {% endif %}
+
+                    <form method="post" action="{{ xar_moduleurl(module,'new','modify') }}" enctype="{{ enc_type }}">
+                        <xar.data-form name="objectname" tplmodule="tplmodule" template="objectname"/>
+                        <div style="clear.both; text-align. center">
+                            <input type="hidden" name="authid" id="authid" value="{{ xar_security_authkey() }}"/>
+                            <input type="hidden" name="confirm" id="confirm" value="1"/>
+                            <input type="hidden" name="objectid" id="objectid" value="{{ thisobject.objectid }}"/>
+                            <input type="hidden" name="itemid" id="itemid" value="0"/>
+                            <input type="hidden" name="tplmodule" id="tplmodule" value="{{ tplmodule }}"/>
+                            <input type="hidden" name="return_url" id="return_url" value="{{ xar_currenturl() }}"/>
+                            <input type="submit" value="{{ xar_translate('Create') }}" class="xar-margin-thickleft"/>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        </table>
+        <div class="xar-clearleft xar-floatleft xar-padding-thick xar-halfwidth xar-align-left" style="padding-top:1em;">
+            {% if total > items_per_page %}
+              {{ xar_translate('Displaying #(1) of #(2) selected', thispageno, total) }}
+            {% else %}
+               Total selected: {{ total }}
+            {% endif %}
+        </div>
+    {% else %}
+        <div class="xar-clearleft xar-floatleft xar-padding-thick xar-halfwidth xar-align-left" style="padding-top:1em;">
+            {% if total > items_per_page %}
+              {{ xar_translate('Displaying #(1) of #(2) selected', thispageno, total) }}
+            {% else %}
+               Total selected: {{ total }}
+            {% endif %}
+        </div>
+        <div class="xar-floatright xar-padding-thick xar-halfwidth xar-align-right" style="padding-top:1em;">
+            {{ include('@' ~ module ~ '/includes/listing_newlink.html.twig') }}
+        </div>
+    {% endif %}

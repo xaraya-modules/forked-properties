@@ -1,0 +1,38 @@
+{% set trid = 'row-' ~ loopitem[primaryalias] %}
+    <tr id="{{ trid }}">
+        {{ include('@' ~ module ~ '/includes/listing_rowprefix.html.twig') }}
+        {% for field in fieldnames|keys %}
+            {% set formfieldname = field ~ '[' ~ loopitem[primaryalias] ~ ']' %}
+            {% set formfieldid = field ~ '_' ~ loopitem[primaryalias] %}
+            {% set formfieldstate = formfieldstates[field] %}
+            {% set column = fieldnames[field] %}
+            {% set value = loopitem[column] %}
+            {% if column == primaryalias and not show_primary %}
+                <xar:continue />
+            {% endif %}
+            {% if formfieldstate == 'hidden' %}
+                {# <!-- Hidden field --> #}
+                {{ xar_data_input({property: properties[column], name: formfieldname, id: formfieldid, value: value, hidden: "hidden"}) }}                    
+            {% else %}
+                <td class="{{ item_class }}">
+                    {% if formfieldstate == 'input' %}
+                        {# <!-- Input field --> #}
+                        {{ xar_data_input({property: properties[column], name: formfieldname, id: formfieldid, value: value}) }}                    
+                    {% else %}
+                        {# <!-- Output field --> #}
+                        {% if field == keyfieldalias %}
+                            <a href="{{ xar_moduleurl(module,'user','display',{'itemid': loopitem[primaryalias], 'name': objectname, 'tplmodule': module}) }}">
+                                {{ xar_data_output({property: properties[column], value: value}) }}
+                            </a>
+                        {% else %}
+                    		{% if value is null %}
+                    			{% set value = '' %}
+                    		{% endif %}
+                            {{ xar_data_output({property: properties[column], value: value}) }}
+                        {% endif %}
+                    {% endif %}
+                </td>
+            {% endif %}
+        {% endfor %}
+        {{ include('@' ~ module ~ '/includes/listing_rowsuffix.html.twig') }}
+    </tr>

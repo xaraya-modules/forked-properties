@@ -1,0 +1,5 @@
+{% if layout == 'combined' %}
+        {{ include('@' ~ module ~ '/includes/listing_row-combined.html.twig') }}
+    {% else %}
+        {{ include('@' ~ module ~ '/includes/listing_row-default.html.twig') }}
+    {% endif %}

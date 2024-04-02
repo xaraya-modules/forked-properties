@@ -1,0 +1,56 @@
+{% if not id %}
+        {% set id = 'listingid_0' %}
+    {% endif %}
+
+    <xar:ajax-listing id="{{ id }}">
+        {{ xar_javascript({filename: "checkall.js", property: "listing", position: "head"}) }}
+
+        <style type="text/css">
+            td.click, th.click { background-color: ##bbb; }
+            td.hover, tr.hover { background-color: ##BFBFD9; }
+            th.hover, tfoot td.hover { background-color: ivory; }
+            td.hovercell, th.hovercell { background-color: ##abc; }
+            td.hoverrow, th.hoverrow { background-color: ##6df; }
+        </style>
+
+        {% set allowread = false %}
+        {% set allowedit = false %}
+        <xar:access level="200">
+            {% set allowread = true %}
+        </xar:access>
+        <xar:access level="500">
+            {% set allowedit = true %}
+        </xar:access>
+
+        {% set url = xar_currenturl(params) %}
+
+        {% if show_bulk is null %}
+            {% set show_bulk = true %}
+        {% endif %}
+
+        {{ xar_style({scope: "module", module: "base", file: "navtabs"}) }}
+        {% if filter %}
+            {{ xar_data_form({objectname: objectname, layout: "filter"}) }}
+        {% else %}
+            {{ include('@' ~ module ~ '/includes/listing_alphabet.html.twig') }}
+            <div style="clear:both"></div>    
+            {{ include('@' ~ module ~ '/includes/listing_searchboxline.html.twig') }}
+        {% endif %}
+        {{ include('@' ~ module ~ '/includes/listing_summaryline.html.twig') }}
+        {{ include('@' ~ module ~ '/includes/listing_pagerline.html.twig') }}
+        <table id="listing_table" class="xar-table xar-fullwidth xar-items" style="clear:both; width: 100%" border="0">
+            <thead>
+                {{ include('@' ~ module ~ '/includes/listing_header.html.twig') }}
+            </thead>
+            <tbody>
+                {{ include('@' ~ module ~ '/includes/listing_body.html.twig') }}
+            </tbody>
+        </table>
+        {% if not total %}
+            <p class="xar-align-center">There are no items selected</p>
+        {% endif %}
+        {{ include('@' ~ module ~ '/includes/listing_footerline.html.twig') }}
+        {% if (show_bulk and (show_bulk != 'false')) and (total > 0) %}
+            {{ include('@' ~ module ~ '/includes/listing_bulk_operations.html.twig') }}
+        {% endif %}
+    </xar:ajax-listing>

@@ -1,0 +1,24 @@
+{% if not url %}
+        {% set url = '' %}
+    {% endif %}
+    {% if not index_name %}
+        {% set index_name = 'id' %}
+    {% endif %}
+    {% if direction and itemid and listing_id %}
+        {% set dummy = xar_coremethod('sys', 'import', ['properties.listing.navigate']) %}
+        {# @todo imported functions will not work with Twig #}
+        {% set url = navigate(listing_id, itemid, direction, index_name, url) %}
+        {% if url != false %}
+            {% if direction == 'forward' %}
+                {% set label = 'Next' %}
+                <a href="{{ url }}" title="{{ label }}">
+                    {{- xar_image({scope: "theme", file: "icons/go-next.png", class: "xar-icon", alt: label}) -}}
+                </a>
+            {% elseif direction == 'backward' %}
+                {% set label = 'Previous' %}
+                <a href="{{ url }}" title="{{ label }}">
+                    {{- xar_image({scope: "theme", file: "icons/go-previous.png", class: "xar-icon", alt: label}) -}}
+                </a>
+            {% endif %}
+        {% endif %}
+    {% endif %}
