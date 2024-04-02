@@ -1,0 +1,27 @@
+<div>
+            <h2>IconCheckbox Property</h2>
+                <h3>Description</h3>
+                <p>
+                    The IconCheckbox dataproperty is a checkbox that in its output display shows an image icon. The icons for true/false can be configured.
+                </p>
+                <h3>Usage</h3>
+                <h4>Standalone</h4>
+                    <pre>
+    &lt;xar:data-input type="iconcheckbox" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-output type="iconcheckbox" <i>[attr1="value1",...]</i> /&gt;
+                    </pre>
+            <h4>Bound</h4>
+                <pre>
+    &lt;xar:data-input property="$properties['iconcheckbox']" <i>[attr1="value1",...]</i> /&gt;
+    &lt;xar:data-output property="$properties['iconcheckbox']" <i>[attr1="value1",...]</i> /&gt;
+                </pre>
+            <h3> Configuration Values</h3>
+            <ul>
+                <li>
+                    <strong>icon_directory</strong>: string [default="set1"]&#160;The directory below the property's template directory where the icon files are found.
+                </li>
+                <li>
+                    <strong>icon_options</strong>: string [default="0,red.png;1,green.png"]&#160;A simple array description that assigns checkbox values to icon files.
+                </li>
+            </ul>
+        </div>

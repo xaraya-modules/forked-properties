@@ -1,0 +1,9 @@
+{% set yes = 'Yes' %}
+{% set no = 'No' %}
+{% if iconpath %}
+    {% if value %}
+        <img src="{{ iconpath }}" alt="{{ yes }}"/>
+    {% else %}
+        <img src="{{ iconpath }}" alt="{{ no }}"/>
+    {% endif %}
+{% endif %}
