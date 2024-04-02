@@ -16,7 +16,7 @@
                         </xar:if>
                         <li class="#$class#">
                             <!-- Want to know if this is a letter search as opposed to a generic search-->
-                            <a href="#xarServer::getCurrentURL(['letter' => 'All', 'op' => 'letter')]#" class="refresh_listing">
+                            <a href="#xarServer::getCurrentURL(['letter' => 'All', 'op' => 'letter'])#" class="refresh_listing">
                                 All
                             </a>
                         </li>
@@ -28,7 +28,7 @@
                             <xar:set name="class">''</xar:set>
                         </xar:if>
                         <li class="#$class#">
-                            <a href="#xarServer::getCurrentURL(['letter' => $ltr, 'op' => 'letter')]#" class="refresh_listing">#$ltr#</a>
+                            <a href="#xarServer::getCurrentURL(['letter' => $ltr, 'op' => 'letter'])#" class="refresh_listing">#$ltr#</a>
                         </li>
                     </xar:foreach>
                     <xar:if condition="$showother_tab">
@@ -38,7 +38,7 @@
                             <xar:set name="class">''</xar:set>
                         </xar:if>
                         <li class="#$class#">
-                            <a href="#xarServer::getCurrentURL(['letter' => 'Other', 'op' => 'letter')]#" class="refresh_listing">
+                            <a href="#xarServer::getCurrentURL(['letter' => 'Other', 'op' => 'letter'])#" class="refresh_listing">
                                 Other
                             </a>
                         </li>
