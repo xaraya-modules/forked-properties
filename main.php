@@ -26,7 +26,7 @@ class QRCodeProperty extends TextBoxProperty
     public $initialization_code_color  = '#000000';
     public $display_url;
 
-//    public $name;
+    //    public $name;
     public $email;
     public $subject;
     public $message;

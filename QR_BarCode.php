@@ -14,7 +14,7 @@ class QR_BarCode extends xarObject
     private $code_size;
     private $code_color;
 
-    public function __construct($code_size=150, $code_color='#000000')
+    public function __construct($code_size = 150, $code_color = '#000000')
     {
         $this->code_size  = $code_size;
         // Remove the hash from hex color codes
