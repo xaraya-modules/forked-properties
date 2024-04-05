@@ -42,13 +42,13 @@ class IconDropdownProperty extends SelectProperty
         $this->template   = 'icondropdown';
     }
 
-    public function showInput(array $data=[])
+    public function showInput(array $data = [])
     {
         $data['template'] = 'dropdown';
         return parent::showInput($data);
     }
 
-    public function showOutput(array $data=[])
+    public function showOutput(array $data = [])
     {
         if (!empty($data['value'])) {
             $this->value = $data['value'];
