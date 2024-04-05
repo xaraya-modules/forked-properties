@@ -16,7 +16,7 @@ sys::import('modules.dynamicdata.class.properties.interfaces');
 
 class AddressPropertyInstall extends AddressProperty implements iDataPropertyInstall
 {
-    public function install(array $data=[])
+    public function install(array $data = [])
     {
         $dat_file = sys::code() . 'properties/address/data/configurations-dat.xml';
         $data = ['file' => $dat_file];

@@ -68,7 +68,7 @@ class AddressProperty extends TextBoxProperty
 
     public function checkInput($name = '', $value = null)
     {
-        $name = empty($name) ? 'dd_'.$this->id : $name;
+        $name = empty($name) ? 'dd_' . $this->id : $name;
         $valid = true;
         $invalid = [];
         $value = [];   // We don't allow a value to be passed to this method
@@ -145,7 +145,7 @@ class AddressProperty extends TextBoxProperty
         return $value;
     }
 
-    public function setValue($value=null)
+    public function setValue($value = null)
     {
         if (empty($value)) {
             $value = [];
