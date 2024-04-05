@@ -16,7 +16,7 @@ sys::import('modules.dynamicdata.class.properties.interfaces');
 
 class DateTimePropertyInstall extends DateTimeProperty implements iDataPropertyInstall
 {
-    public function install(array $data=[])
+    public function install(array $data = [])
     {
         $dat_file = sys::code() . 'properties/datetime/data/configurations-dat.xml';
         $data = ['file' => $dat_file];

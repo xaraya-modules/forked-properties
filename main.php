@@ -46,7 +46,7 @@ class DateTimeProperty extends DataProperty
 
     public function checkInput($name = '', $value = null)
     {
-        $name = empty($name) ? 'dd_'.$this->id : $name;
+        $name = empty($name) ? 'dd_' . $this->id : $name;
 
         // Get the input type flag from the template so we know how to proceed
         if (!xarVar::fetch('input_type_' . $name, 'str:1:100', $input_type, '', xarVar::NOT_REQUIRED)) {
@@ -105,22 +105,24 @@ class DateTimeProperty extends DataProperty
 
         // Anything that is not explicitly 'calendar' is considered 'dropdown' (the default)
         if ($data['input_type'] == 'dropdown') {
-		
-			$value = $this->getvaluearray($data);
+
+            $value = $this->getvaluearray($data);
             // Adjust for timezone
             $value['timestamp'] += $this->getOffset();
             $data['value'] = $value['timestamp'];
-			$data['value'] = $this->getvaluearray($data);
-			
-			if($this->initialization_start_year == null)            
-				$this->initialization_start_year =  min($data['value']['year'], date("Y")) - 5;
-		
-			if($this->initialization_end_year == null)          
-				$this->initialization_end_year = max($data['value']['year'], date("Y")) + 5;
-				
-			$data['start_year'] = isset($data['start_year'])? $data['start_year'] : $this->initialization_start_year;
-			$data['end_year'] = isset($data['end_year'])? $data['end_year'] : $this->initialization_end_year;        
-        
+            $data['value'] = $this->getvaluearray($data);
+
+            if($this->initialization_start_year == null) {
+                $this->initialization_start_year =  min($data['value']['year'], date("Y")) - 5;
+            }
+
+            if($this->initialization_end_year == null) {
+                $this->initialization_end_year = max($data['value']['year'], date("Y")) + 5;
+            }
+
+            $data['start_year'] ??= $this->initialization_start_year;
+            $data['end_year'] ??= $this->initialization_end_year;
+
         } else {
             // Use the datetime-local input
             if (!isset($data['value'])) {
@@ -278,7 +280,7 @@ class DateTimeProperty extends DataProperty
         } else {
             // Check for a xar function
             if (strpos($this->initialization_timezone, 'xar') === 0) {
-                @eval('$timezone_code = ' . $this->initialization_timezone .';');
+                @eval('$timezone_code = ' . $this->initialization_timezone . ';');
             } else {
                 // Do nothing nothing else for now
                 $timezone_code = $this->initialization_timezone;

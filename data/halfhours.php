@@ -14,11 +14,11 @@
 function datetime_halfhours()
 {
     $options = [];
-    for ($i=0;$i<=24;$i++) {
-        $hour1 = "00".$i;
-        $hour1 = substr($hour1, strlen($hour1)-2);
-        $options[] = ['id' => 2*$i*30, 'name' => $hour1 . ':00'];
-        $options[] = ['id' => (2*$i+1)*30, 'name' => $hour1 . ':30'];
+    for ($i = 0;$i <= 24;$i++) {
+        $hour1 = "00" . $i;
+        $hour1 = substr($hour1, strlen($hour1) - 2);
+        $options[] = ['id' => 2 * $i * 30, 'name' => $hour1 . ':00'];
+        $options[] = ['id' => (2 * $i + 1) * 30, 'name' => $hour1 . ':30'];
         /*
         $hour1 = "00".$i;
         $hour1 = substr($hour1,strlen($hour1)-2);

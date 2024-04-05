@@ -14,12 +14,12 @@
 function datetime_hours()
 {
     $options = [];
-    for ($i=0;$i<24;$i++) {
-        $hour1 = "00".$i;
-        $hour1 = substr($hour1, strlen($hour1)-2);
-        $hour2 = "00".($i+1);
-        $hour2 = substr($hour2, strlen($hour2)-2);
-        $options[] = ['id' => $i*60, 'name' => $hour1 . ':00 - ' . $hour2 . ':00'];
+    for ($i = 0;$i < 24;$i++) {
+        $hour1 = "00" . $i;
+        $hour1 = substr($hour1, strlen($hour1) - 2);
+        $hour2 = "00" . ($i + 1);
+        $hour2 = substr($hour2, strlen($hour2) - 2);
+        $options[] = ['id' => $i * 60, 'name' => $hour1 . ':00 - ' . $hour2 . ':00'];
     }
     return $options;
 }
