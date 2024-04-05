@@ -91,7 +91,7 @@ class PagerProperty extends TextBoxProperty
         return true;
     }
 
-    public function getArgs(array $args=[])
+    public function getArgs(array $args = [])
     {
         $position = [
                         'startnum' => $this->startnum,
@@ -151,16 +151,16 @@ class PagerProperty extends TextBoxProperty
         return parent::showInput([]);
     }
 
-/**
- * Creates pager information with no assumptions to output format.
- *
- * @author Jason Judge
- * @since 2003/10/09
- * @access public
- * @param integer $currentItem     start item
- *
- * @todo  Move this somewhere else, preferably transparent and a widget (which might be mutually exclusive)
- */
+    /**
+     * Creates pager information with no assumptions to output format.
+     *
+     * @author Jason Judge
+     * @since 2003/10/09
+     * @access public
+     * @param integer $currentItem     start item
+     *
+     * @todo  Move this somewhere else, preferably transparent and a widget (which might be mutually exclusive)
+     */
     public function getPagerInfo($currentItem)
     {
         // Default block options.
@@ -232,16 +232,16 @@ class PagerProperty extends TextBoxProperty
         }
 
         // Current/Last page numbers.
-        $currentPage = (int)ceil(($currentItem-$firstItem+1) / $this->items_per_page) + $firstPage - 1;
-        $totalPages = (int)ceil($this->itemstotal / $this->items_per_page);
+        $currentPage = (int) ceil(($currentItem - $firstItem + 1) / $this->items_per_page) + $firstPage - 1;
+        $totalPages = (int) ceil($this->itemstotal / $this->items_per_page);
 
         // First/Current/Last block numbers
         $firstBlock = 1;
-        $currentBlock = (int)ceil(($currentItem-$firstItem+1) / $itemsPerBlock);
-        $totalBlocks = (int)ceil($this->itemstotal / $itemsPerBlock);
+        $currentBlock = (int) ceil(($currentItem - $firstItem + 1) / $itemsPerBlock);
+        $totalBlocks = (int) ceil($this->itemstotal / $itemsPerBlock);
 
         // Get start and end items of the current page.
-        $pageFirstItem = $currentItem - (($currentItem-$firstItem) % $this->items_per_page);
+        $pageFirstItem = $currentItem - (($currentItem - $firstItem) % $this->items_per_page);
         $pageLastItem = $pageFirstItem + $this->items_per_page - 1;
         if ($pageLastItem > $lastItem) {
             $pageLastItem = $lastItem;
@@ -252,7 +252,7 @@ class PagerProperty extends TextBoxProperty
 
         $data['middleitems'] = [];
         $data['middleurls'] = [];
-        $pageNum = (int)ceil(($blockFirstItem - $firstItem + 1) / $this->items_per_page) + $firstPage - 1;
+        $pageNum = (int) ceil(($blockFirstItem - $firstItem + 1) / $this->items_per_page) + $firstPage - 1;
         for ($i = $blockFirstItem; $i <= $blockLastItem; $i += $this->items_per_page) {
             if (!empty($this->urltemplate)) {
                 $data['middleurls'][$pageNum] = str_replace([$urlItemMatch,$urlItemMatchEnc], [$i,$i], $this->urltemplate);
@@ -289,7 +289,7 @@ class PagerProperty extends TextBoxProperty
 
         // These two are item numbers. The naming is historical.
         $data['firstpage'] = $firstItem;
-        $data['lastpage'] = $lastItem - (($lastItem-$firstItem) % $this->items_per_page);
+        $data['lastpage'] = $lastItem - (($lastItem - $firstItem) % $this->items_per_page);
 
         if (!empty($this->urltemplate)) {
             // These two links are for first and last pages.
