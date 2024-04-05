@@ -17,7 +17,7 @@ sys::import('modules.dynamicdata.class.objects.factory');
 
 class LanguagesPropertyInstall extends LanguagesProperty implements iDataPropertyInstall
 {
-    public function install(array $data=[])
+    public function install(array $data = [])
     {
         if (!DataObjectFactory::isObject(['name' => 'languages'])) {
             $files[] = sys::code() . 'properties/languages/data/language-def.xml';

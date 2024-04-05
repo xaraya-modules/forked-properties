@@ -31,7 +31,7 @@ class LanguagesProperty extends ObjectRefProperty
         $this->filepath   = 'auto';
     }
 
-    public function showInput(array $data=[])
+    public function showInput(array $data = [])
     {
         if (!empty($data['store_prop'])) {
             $this->initialization_store_prop = $data['store_prop'];
@@ -42,7 +42,7 @@ class LanguagesProperty extends ObjectRefProperty
         return parent::showInput($data);
     }
 
-    public function showOutput(array $data=[])
+    public function showOutput(array $data = [])
     {
         if (!empty($data['store_prop'])) {
             $this->initialization_store_prop = $data['store_prop'];
