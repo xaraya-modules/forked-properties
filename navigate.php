@@ -78,7 +78,7 @@ function navigate($listing_id, $itemid, $direction, $index_name, $url)
 
 // If the function doesn't already exist
 if (!function_exists('http_build_url')) {
-        // Define constants
+    // Define constants
     define('HTTP_URL_REPLACE', 0x0001);	// Replace every part of the first URL when there's one of the second URL
     define('HTTP_URL_JOIN_PATH', 0x0002);	// Join relative paths
     define('HTTP_URL_JOIN_QUERY', 0x0004);	// Join query strings
@@ -139,7 +139,7 @@ if (!function_exists('http_build_url')) {
                     // If the URL doesn't start with a slash, we need to merge
                     if ($url['path'][0] != '/') {
                         // If the path ends with a slash, store as is
-                        if ('/' == $parts['path'][strlen($parts['path'])-1]) {
+                        if ('/' == $parts['path'][strlen($parts['path']) - 1]) {
                             $sBasePath	= $parts['path'];
                         }
                         // Else trim off the file
@@ -210,12 +210,12 @@ if (!function_exists('http_build_url')) {
         // Combine the new elements into a string and return it
         return
              ((isset($url['scheme'])) ? $url['scheme'] . '://' : '')
-            .((isset($url['user'])) ? $url['user'] . ((isset($url['pass'])) ? ':' . $url['pass'] : '') .'@' : '')
-            .((isset($url['host'])) ? $url['host'] : '')
-            .((isset($url['port'])) ? ':' . $url['port'] : '')
-            .((isset($url['path'])) ? $url['path'] : '')
-            .((isset($url['query'])) ? '?' . $url['query'] : '')
-            .((isset($url['fragment'])) ? '#' . $url['fragment'] : '')
+            . ((isset($url['user'])) ? $url['user'] . ((isset($url['pass'])) ? ':' . $url['pass'] : '') . '@' : '')
+            . ((isset($url['host'])) ? $url['host'] : '')
+            . ((isset($url['port'])) ? ':' . $url['port'] : '')
+            . ((isset($url['path'])) ? $url['path'] : '')
+            . ((isset($url['query'])) ? '?' . $url['query'] : '')
+            . ((isset($url['fragment'])) ? '#' . $url['fragment'] : '')
         ;
     }
 }

@@ -58,26 +58,26 @@ class ListingProperty extends DataProperty
         return parent::showInput($data);
     }
 
-/*
-Notes:
-- We support 2 search types: by alphabet, by text search
-- Text searches and alphabet searches are mutually exclusive
-- Sorting direction, ordering field is preserved across the search types
-- The itemtype is fundamental in determining if we are in an existing context (and have a current query) or a new context
-- As a general rule we try to pass everything that has not changed via session vars.
-- The sessionvar listing.settings contains an associative array which contains the settings of every listing the session encounters
-- The sessionvar 'listing.' . $objectname contains a serialized array of the items of the last listing displayed.
-    This sessionvar is only created when we are exporting (attribute export="1"
-- The sessionvar listing.lastkeys contains an associative array of the IDs of the last query of each listing the user has encountered.
-  The keys are stored by listing ID.
-    This sessionvar is only created when the listing is given an ID: id="somenumberorstring"
+    /*
+    Notes:
+    - We support 2 search types: by alphabet, by text search
+    - Text searches and alphabet searches are mutually exclusive
+    - Sorting direction, ordering field is preserved across the search types
+    - The itemtype is fundamental in determining if we are in an existing context (and have a current query) or a new context
+    - As a general rule we try to pass everything that has not changed via session vars.
+    - The sessionvar listing.settings contains an associative array which contains the settings of every listing the session encounters
+    - The sessionvar 'listing.' . $objectname contains a serialized array of the items of the last listing displayed.
+        This sessionvar is only created when we are exporting (attribute export="1"
+    - The sessionvar listing.lastkeys contains an associative array of the IDs of the last query of each listing the user has encountered.
+      The keys are stored by listing ID.
+        This sessionvar is only created when the listing is given an ID: id="somenumberorstring"
 
-    fieldlists attributes in templates have the form
-    fieldlist="field1[:formfieldname1:fieldstate1][,field2[:formfieldname2:fieldstate2]]"
-    The first part of the name is the name of the field
-    The second part of the name is the Label it will be given in the column header
-    The third part of the name can have the values input / output (default) / hidden
-*/
+        fieldlists attributes in templates have the form
+        fieldlist="field1[:formfieldname1:fieldstate1][,field2[:formfieldname2:fieldstate2]]"
+        The first part of the name is the name of the field
+        The second part of the name is the Label it will be given in the column header
+        The third part of the name can have the values input / output (default) / hidden
+    */
     public function runquery($data)
     {
         //--- -2. Initial parameters
@@ -90,7 +90,7 @@ Notes:
         if (!isset($data['fieldlist'])) {
             $data['fieldlist'] = $this->fieldlist;
         }
-//        if (!isset($data['tplmodule'])) $data['tplmodule'] = $this->tplmodule;
+        //        if (!isset($data['tplmodule'])) $data['tplmodule'] = $this->tplmodule;
         if (isset($data['tplmodule'])) {
             $data['module'] = $data['tplmodule'];
         }
@@ -306,7 +306,7 @@ Notes:
         $tablekeyfield = '';
         $keyfieldalias = '';
 
-        $properties =& $object->getProperties(['status' => [DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,DataPropertyMaster::DD_DISPLAYSTATE_VIEWONLY]]);
+        $properties = & $object->getProperties(['status' => [DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE,DataPropertyMaster::DD_DISPLAYSTATE_VIEWONLY]]);
         $has_primary = false;
         foreach ($fieldlist as $fielditem) {
             // Explode the single item in the fieldlist
@@ -449,11 +449,11 @@ Notes:
             $operation = 'columnclick';
         }                        // a  column header was clicked
         elseif ($op == 'letter') {
-            $startnum =1;
+            $startnum = 1;
             $operation = 'lettersearch';
         }                   // an alphabet link was clicked
         elseif ($op == 'submit') {
-            $startnum =1;
+            $startnum = 1;
             $operation = 'textsearch';
         }                    // a string was entered into the text field
         elseif ($op == 'page') {
@@ -571,7 +571,7 @@ Notes:
             // Support multiple orders/sort
             $order = explode(',', $order);
             $sort = explode(',', $sort);
-            for ($i=0;$i<count($order);$i++) {
+            for ($i = 0;$i < count($order);$i++) {
                 if (!isset($sort[$i])) {
                     $sort[$i] = 'ASC';
                 }
@@ -588,7 +588,7 @@ Notes:
                     // this is better than the 1x way: no using SQL functions, and we can accomodate any type of 'alphabet'
                     //foreach ($alphabet as $let) $q->notlike('r.name', $let.'%');
                     foreach ($alphabet as $let) {
-                        $q->notlike($tablekeyfield, $let.'%');
+                        $q->notlike($tablekeyfield, $let . '%');
                     }
                     $data['msg'] = xarML(
                         'Listing where #(1) begins with character not listed in alphabet above (labeled as "Other")',
@@ -614,21 +614,21 @@ Notes:
                 //--- 17. Operation filters: we are submitting a search text
 
                 if (!empty($search)) {
-                    $qsearch = '%'.$search.'%';
+                    $qsearch = '%' . $search . '%';
                     // Dynamically set on active fields - must have roles id - Search conditions _OR_
                     $i = 0;
                     $msg = '';
                     foreach ($sourcefields as $sourcefield => $value) {
                         if (!empty($value)) {
-                            if ($i >0) {
+                            if ($i > 0) {
                                 $msg .= ' or';
                             }
-                            $c[$i]= $object->dataquery->plike($value, $qsearch);
-                            $msg .= ' '.$data['fieldlabels'][$sourcefield].' ';
+                            $c[$i] = $object->dataquery->plike($value, $qsearch);
+                            $msg .= ' ' . $data['fieldlabels'][$sourcefield] . ' ';
                             $i++;
                         }
                     }
-                    if (!empty($msg) && $i>0) {
+                    if (!empty($msg) && $i > 0) {
                         if (empty($data['msg'])) {
                             $data['msg'] = xarML('Listing where #(1) contain "#(2)"', $msg, $search);
                         } else {
@@ -777,7 +777,7 @@ Notes:
 
         // Based on the total of items, reset the startat parameter if need be to make it smaller than the total number of items
         if ($data['total'] <= $object->dataquery->startat) {
-            $startat = (int)($data['total']/$object->dataquery->rowstodo * ($object->dataquery->rowstodo - 1));
+            $startat = (int) ($data['total'] / $object->dataquery->rowstodo * ($object->dataquery->rowstodo - 1));
             if ($startat < 1) {
                 $startat = 1;
             }
@@ -793,17 +793,17 @@ Notes:
             }
             // Add the fieldlist defined above and get the records to be displayed
             $items = $object->getItems(['fieldlist' => $data['fieldnames']]);
-        // We may need to recalculate the total if we have linked tables
-        // Just force it for now
+            // We may need to recalculate the total if we have linked tables
+            // Just force it for now
         } else {
             if (!empty($data['items_per_page'])) {
                 // items were passed, but we need to get the correct subset
                 // first get the total
                 $tempitems = [];
                 $item_values = array_values($items);
-                $startat = $object->dataquery->startat-1;
+                $startat = $object->dataquery->startat - 1;
                 $endat = $startat + $object->dataquery->rowstodo;
-                for ($i=$startat;$i<$endat;$i++) {
+                for ($i = $startat;$i < $endat;$i++) {
                     if (!isset($item_values[$i])) {
                         break;
                     }
@@ -933,11 +933,11 @@ Notes:
         return $data;
     }
 
-/*
- * Checks whether the AJAX request is an update or not
- * "confirm=1" in the AJAX request signals this is an update
- */
-    public function ajaxConfirm($flag='confirm')
+    /*
+     * Checks whether the AJAX request is an update or not
+     * "confirm=1" in the AJAX request signals this is an update
+     */
+    public function ajaxConfirm($flag = 'confirm')
     {
         if (xarController::$request->isAjax()) {
             if (!xarVar::fetch($flag, 'int', $confirm, 0, xarVar::NOT_REQUIRED)) {
@@ -949,15 +949,15 @@ Notes:
         }
     }
 
-/*
- * Repopulates the output template and sends the output to the browser
- * TODO: allow overrides (module, theme) for the showoutput template.
- * Right now the template in the property is used, although included templates can be overrides
- */
-    public function ajaxRefresh($data=[])
+    /*
+     * Repopulates the output template and sends the output to the browser
+     * TODO: allow overrides (module, theme) for the showoutput template.
+     * Right now the template in the property is used, although included templates can be overrides
+     */
+    public function ajaxRefresh($data = [])
     {
         if (xarController::$request->isAjax()) {
-            $file = sys::code().'properties/listing/xartemplates/showinput.xt';
+            $file = sys::code() . 'properties/listing/xartemplates/showinput.xt';
             sys::import('xaraya.templating.compiler');
             $compiler = XarayaCompiler::instance();
             $output = $compiler->compileFile($file);

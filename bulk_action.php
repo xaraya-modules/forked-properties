@@ -11,7 +11,7 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
-function listing_bulk_action()
+function listing_bulk_action(array $args = [], $context = null)
 {
     sys::import('modules.dynamicdata.class.objects.base');
 
@@ -37,15 +37,15 @@ function listing_bulk_action()
 
     // Must have an object defined
     if (empty($objectname)) {
-        xarController::redirect($returnurl);
+        xarController::redirect($returnurl, null, $context);
     }
     // Must have some records defined
     if (empty($idlist)) {
-        xarController::redirect($returnurl);
+        xarController::redirect($returnurl, null, $context);
     }
     // Must have an operation defined
     if (empty($operation)) {
-        xarController::redirect($returnurl);
+        xarController::redirect($returnurl, null, $context);
     }
 
     $listing = DataObjectFactory::getObject(['name' => $objectname]);
@@ -87,7 +87,7 @@ function listing_bulk_action()
 
             // If the URL is empty, bail
             if (empty($funcurl)) {
-                xarController::redirect($returnurl);
+                xarController::redirect($returnurl, null, $context);
                 return true;
             }
 
@@ -122,12 +122,12 @@ function listing_bulk_action()
             $result = base64_encode($result);
 
             # --------------------------------------------------------
-#
+            #
             # Add the bulk results to the URL for display, and remove any previous results
-#
+            #
             # We are specifically using straight string replacement, rather than parse_url,
             # because we don't know what type of URL scheme is being used (Xaraya, short URLs etc.)
-#
+            #
             $listing_query = "from_listing";
 
             // Find the part where we have the listing-query string
@@ -158,9 +158,9 @@ function listing_bulk_action()
                 $returnurl .= "&" . $listing_query . "=" . $result;
             }
 
-            xarController::redirect($returnurl);
+            xarController::redirect($returnurl, null, $context);
             break;
     } // end switch
-    xarController::redirect($returnurl);
+    xarController::redirect($returnurl, null, $context);
     return true;
 }

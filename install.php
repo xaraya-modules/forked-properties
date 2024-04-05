@@ -14,7 +14,7 @@ sys::import('modules.dynamicdata.class.properties.interfaces');
 
 class ListingPropertyInstall extends ListingProperty implements iDataPropertyInstall
 {
-    public function install(array $data=[])
+    public function install(array $data = [])
     {
         $dat_file = sys::code() . 'properties/listing/data/configurations-dat.xml';
         $data = ['file' => $dat_file];
