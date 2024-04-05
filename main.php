@@ -37,13 +37,13 @@ class IconCheckboxProperty extends CheckboxProperty
         $this->template   = 'iconcheckbox';
     }
 
-    public function showInput(array $data=[])
+    public function showInput(array $data = [])
     {
         $data['template'] = 'checkbox';
         return parent::showInput($data);
     }
 
-    public function showOutput(array $data=[])
+    public function showOutput(array $data = [])
     {
         if (!empty($data['value'])) {
             $this->value = $data['value'];
