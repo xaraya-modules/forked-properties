@@ -129,6 +129,7 @@ class DateTimeProperty extends DataProperty
                 $data['value'] = $this->value;
             }
             // Adjust for timezone
+			if (empty($data['value'])) $data['value'] = 0;
             $data['value'] += $this->getOffset();
             // The format is important here: no timezones allowed, and set the seconds to 00
             $data['value'] = date('Y-m-d\TH:i:00', $data['value']);
