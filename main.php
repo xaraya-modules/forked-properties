@@ -270,7 +270,7 @@ class ListingProperty extends DataProperty
 
         // Check if the object has a primary key
         if (empty($object->primary)) {
-            throw new Exception(xarML("The listing cannot be displayed, because this object has no primary key"));
+            throw new Exception(xarMLS::translate("The listing cannot be displayed, because this object has no primary key"));
         }
 
         // We'll put fields into the output of the query that have status active or list
@@ -426,7 +426,7 @@ class ListingProperty extends DataProperty
 
         // Sanity check to make sure we got a key
         if (empty($defaultkey)) {
-            throw new Exception(xarML("The listing cannot be displayed, because no select key was found"));
+            throw new Exception(xarMLS::translate("The listing cannot be displayed, because no select key was found"));
         }
 
         // Check whether the order which may have been passed is still valid (we may have changed the display settings
@@ -520,7 +520,7 @@ class ListingProperty extends DataProperty
                 break;
 
             default:
-                throw new Exception(xarML('Illegal operation: #(1)', $operation));
+                throw new Exception(xarMLS::translate('Illegal operation: #(1)', $operation));
         }
 
         //--- 12. Add categories to the query if they are active
@@ -590,17 +590,17 @@ class ListingProperty extends DataProperty
                     foreach ($alphabet as $let) {
                         $q->notlike($tablekeyfield, $let . '%');
                     }
-                    $data['msg'] = xarML(
+                    $data['msg'] = xarMLS::translate(
                         'Listing where #(1) begins with character not listed in alphabet above (labeled as "Other")',
                         $defaultkeyname
                     );
                 } elseif ($letter == 'All') {
-                    $data['msg'] = xarML("All items");
+                    $data['msg'] = xarMLS::translate("All items");
                 } else {
                     // TODO: handle case-sensitive databases
                     //$q->like('r.name', $letter.'%');
                     $object->dataquery->regex($tablekeyfield, '^(\\\%)*' . $letter);
-                    $data['msg'] = xarML('Listing where #(1) begins with "#(2)"', $defaultkeyname, $letter);
+                    $data['msg'] = xarMLS::translate('Listing where #(1) begins with "#(2)"', $defaultkeyname, $letter);
                 }
 
                 //Adjust session vars and parameters
@@ -630,16 +630,16 @@ class ListingProperty extends DataProperty
                     }
                     if (!empty($msg) && $i > 0) {
                         if (empty($data['msg'])) {
-                            $data['msg'] = xarML('Listing where #(1) contain "#(2)"', $msg, $search);
+                            $data['msg'] = xarMLS::translate('Listing where #(1) contain "#(2)"', $msg, $search);
                         } else {
-                            $data['msg'] .= xarML(' and listing where #(1) contain "#(2)"', $msg, $search);
+                            $data['msg'] .= xarMLS::translate(' and listing where #(1) contain "#(2)"', $msg, $search);
                         }
                     }
                     // take the conditions we decided on above and add them to the query as a bunch of ORs
                     $object->dataquery->qor($c);
                 }
                 if (empty($data['msg'])) {
-                    $data['msg'] = xarML('All items');
+                    $data['msg'] = xarMLS::translate('All items');
                 }
 
                 //Adjust session vars and parameters
@@ -656,7 +656,7 @@ class ListingProperty extends DataProperty
                 break;
 
             default:
-                throw new Exception(xarML('Illegal operation: #(1)', $operation));
+                throw new Exception(xarMLS::translate('Illegal operation: #(1)', $operation));
         }
 
         //--- 19. Cache the dd object for reuse (if called)
@@ -720,7 +720,7 @@ class ListingProperty extends DataProperty
                     }
                     xarVariableCache::setCached('listing.' . $objectname, serialize($values));
                 } else {
-                    $message = xarML('Variable Caching needs to be turned on');
+                    $message = xarMLS::translate('Variable Caching needs to be turned on');
                     die($message);
                 }
             }
