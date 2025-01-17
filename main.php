@@ -53,12 +53,12 @@ class AddressProperty extends TextBoxProperty
 
     public function __construct(ObjectDescriptor $descriptor)
     {
-        $this->display_address_components = 'street,' . xarML('Street') .
-                                            ';street2,' . xarML('Street') .
-                                            ';city,' . xarML('City') .
-                                            ';postal_code,' . xarML('Postal Code') .
-                                            ';region,' . xarML('Region') .
-                                            ';country,' . xarML('Country') . ';';
+        $this->display_address_components = 'street,' . xarMLS::translate('Street') .
+                                            ';street2,' . xarMLS::translate('Street') .
+                                            ';city,' . xarMLS::translate('City') .
+                                            ';postal_code,' . xarMLS::translate('Postal Code') .
+                                            ';region,' . xarMLS::translate('Region') .
+                                            ';country,' . xarMLS::translate('Country') . ';';
 
         parent::__construct($descriptor);
         $this->tplmodule = 'auto';
@@ -102,9 +102,9 @@ class AddressProperty extends TextBoxProperty
             $count = count($invalid);
             $invalid = implode(',', $invalid);
             if ($count == 1) {
-                $this->invalid = xarML('The field #(1) is not valid', $invalid);
+                $this->invalid = xarMLS::translate('The field #(1) is not valid', $invalid);
             } else {
-                $this->invalid = xarML('The fields #(1) are not valid', $invalid);
+                $this->invalid = xarMLS::translate('The fields #(1) are not valid', $invalid);
             }
         }
         return $valid;
