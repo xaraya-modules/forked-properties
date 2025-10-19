@@ -48,13 +48,13 @@
                         </xar:set>
                     </xar:if>
                     &#160;&#160;<a href="#$pageurl#" title="#$pageurllabel#" class="refresh_listing">#$pagenumber#</a>
-                    <!-- &#160;&#160;<a href="#$pageurl#" class="refresh_listing">[#$middleitemsfrom[$pagenumber]#-#$middleitemsto[$pagenumber]#]</a> -->
+                    <xar:comment>&#160;&#160;<a href="#$pageurl#" class="refresh_listing">[#$middleitemsfrom[$pagenumber]#-#$middleitemsto[$pagenumber]#]</a></xar:comment>
                 <xar:else />
                     <xar:set name="pageurllabel">
                         xarML('Page #(1)',$pagenumber)
                     </xar:set>
                     &#160;&#160;<span title="#$pageurllabel#">#$pagenumber#</span>
-                    <!-- &#160;&#160;[#$middleitemsfrom[$pagenumber]#-#$middleitemsto[$pagenumber]#] -->
+                    <xar:comment>&#160;&#160;[#$middleitemsfrom[$pagenumber]#-#$middleitemsto[$pagenumber]#]</xar:comment>
                 </xar:if>
             </xar:foreach>
 
