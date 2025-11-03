@@ -214,12 +214,12 @@ class PagerProperty extends TextBoxProperty
         // If this request was the same as the last one, then return the cached pager details.
         // TODO: is there a better way of caching for each unique request?
         $request = md5($currentItem . ':' . $lastItem . ':' . $this->items_per_page . ':' . serialize($this->blockoptions));
-        if (xarCoreCache::getCached('Pager.core', 'request') == $request) {
-            return xarCoreCache::getCached('Pager.core', 'details');
+        if ($this->mem()->get('Pager.core', 'request') == $request) {
+            return $this->mem()->get('Pager.core', 'details');
         }
 
         // Record the values in this request.
-        xarCoreCache::setCached('Pager.core', 'request', $request);
+        $this->mem()->set('Pager.core', 'request', $request);
 
         // Max number of items in a block of pages.
         $itemsPerBlock = ($blockSize * $this->items_per_page);
@@ -353,7 +353,7 @@ class PagerProperty extends TextBoxProperty
         }
 
         // Cache all the pager details.
-        xarCoreCache::setCached('Pager.core', 'details', $data);
+        $this->mem()->set('Pager.core', 'details', $data);
 
         return $data;
     }
