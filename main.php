@@ -103,7 +103,7 @@ class ListingProperty extends DataProperty
         if (isset($data['module'])) {
             $this->module = $data['module'];
         } else {
-            $info = xarController::$request->getInfo();
+            $info = xarController::getRequest()->getInfo();
             $this->module = $info[0];
             $data['module'] = $this->module;
         }

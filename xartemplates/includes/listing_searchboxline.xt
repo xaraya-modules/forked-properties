@@ -14,7 +14,7 @@
                 <xar:button type="submit" label="$label"/>
                 <xar:if condition="!empty($msg)">
                     <div style="height:auto;padding:0 10px;margin:0 5px 0 0;">
-                        Selected on: #xarVar::prepForDisplay($msg)#
+                        Selected on: #xarVarPrep::text($msg)#
                    </div>
                 </xar:if>
             </div>
