@@ -66,9 +66,9 @@ class IconDropdownProperty extends SelectProperty
         }
         // get the icon option corresponding to this value
         $result = $this->getIconOption();
-        // only apply xarVar::prepForDisplay on strings, not arrays et al.
+        // only apply $this->prep()->text on strings, not arrays et al.
         if (!empty($result) && is_string($result)) {
-            $result = xarVar::prepForDisplay($result);
+            $result = $this->prep()->text($result);
         }
         $data['icon_option'] = $result;
         $data['iconpath'] = null;
