@@ -12,7 +12,6 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
-sys::import('modules.base.xarproperties.checkbox');
 
 /**
  * IconCheckbox Property

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * IconCheckbox Property
  *
@@ -11,8 +12,6 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
-sys::import('properties.iconcheckbox.main');
-sys::import('modules.dynamicdata.class.properties.interfaces');
 
 class IconCheckboxPropertyInstall extends IconCheckboxProperty implements iDataPropertyInstall
 {
