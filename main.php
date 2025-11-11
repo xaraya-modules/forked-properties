@@ -12,9 +12,6 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
-sys::import('modules.dynamicdata.class.properties.base');
-sys::import('xaraya.structures.datetime');
-sys::import('properties.date.data.formats');
 
 class DateProperty extends DataProperty
 {
@@ -220,7 +217,7 @@ class DateProperty extends DataProperty
 
     public function format($value)
     {
-        switch($this->display_date_format_type) {
+        switch ($this->display_date_format_type) {
             case 1:
             default:
                 $value = xarLocale::getFormattedDate('short', $value, false);
