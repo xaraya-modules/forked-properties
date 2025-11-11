@@ -12,9 +12,6 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
-sys::import('modules.dynamicdata.class.properties.base');
-sys::import('xaraya.structures.datetime');
-sys::import('properties.datetime.data.formats');
 
 class DateTimeProperty extends DataProperty
 {
@@ -112,11 +109,11 @@ class DateTimeProperty extends DataProperty
             $data['value'] = $value['timestamp'];
             $data['value'] = $this->getvaluearray($data);
 
-            if($this->initialization_start_year == null) {
+            if ($this->initialization_start_year == null) {
                 $this->initialization_start_year =  min($data['value']['year'], date("Y")) - 5;
             }
 
-            if($this->initialization_end_year == null) {
+            if ($this->initialization_end_year == null) {
                 $this->initialization_end_year = max($data['value']['year'], date("Y")) + 5;
             }
 
@@ -129,7 +126,9 @@ class DateTimeProperty extends DataProperty
                 $data['value'] = $this->value;
             }
             // Adjust for timezone
-			if (empty($data['value'])) $data['value'] = 0;
+            if (empty($data['value'])) {
+                $data['value'] = 0;
+            }
             $data['value'] += $this->getOffset();
             // The format is important here: no timezones allowed, and set the seconds to 00
             $data['value'] = date('Y-m-d\TH:i:00', $data['value']);
@@ -222,7 +221,7 @@ class DateTimeProperty extends DataProperty
 
     public function format($value)
     {
-        switch($this->display_datetime_format_type) {
+        switch ($this->display_datetime_format_type) {
             case 1:
             default:
                 $date = xarLocale::getFormattedDate('short', $value, false);

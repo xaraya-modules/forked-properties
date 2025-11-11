@@ -1,4 +1,5 @@
 <?php
+
 /**
  * DateTime Property
  *
@@ -11,8 +12,6 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
-sys::import('properties.datetime.main');
-sys::import('modules.dynamicdata.class.properties.interfaces');
 
 class DateTimePropertyInstall extends DateTimeProperty implements iDataPropertyInstall
 {
