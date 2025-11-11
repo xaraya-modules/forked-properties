@@ -12,8 +12,6 @@
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 
-sys::import('modules.base.xarproperties.textbox');
-sys::import('properties.qrcode.QR_BarCode');
 
 class QRCodeProperty extends TextBoxProperty
 {
