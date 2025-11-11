@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Listing Property
  *
@@ -13,7 +14,6 @@
 
 function listing_bulk_action(array $args = [], $context = null)
 {
-    sys::import('modules.dynamicdata.class.objects.base');
 
     // Get parameters
     if (!xarVar::fetch('idlist', 'isset', $idlist, '', xarVar::DONT_SET)) {

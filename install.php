@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Listing Property
  *
@@ -9,8 +10,6 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
-sys::import('properties.listing.main');
-sys::import('modules.dynamicdata.class.properties.interfaces');
 
 class ListingPropertyInstall extends ListingProperty implements iDataPropertyInstall
 {

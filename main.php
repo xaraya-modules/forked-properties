@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Listing Property
  *
@@ -11,7 +12,6 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
-sys::import('modules.dynamicdata.class.properties.base');
 
 class ListingProperty extends DataProperty
 {
@@ -140,8 +140,6 @@ class ListingProperty extends DataProperty
         $data['alphabet'] = $this->alphabet;
 
         //--- -1. Get the classes we need
-        sys::import('xaraya.structures.query');
-        sys::import('modules.dynamicdata.class.properties.master');
 
         //--- 0. Local parameters
         $baddatasources = ['dynamic_data','dummy','modulevars'];
@@ -161,7 +159,6 @@ class ListingProperty extends DataProperty
             if (is_object($object)) {
                 throw new Exception('Object passed to the listing property instead of name');
             }
-            sys::import('modules.dynamicdata.class.objects.factory');
             $object = DataObjectFactory::getObjectList(['name' => $objectname]);
         } elseif (isset($object)) {
             if (!is_object($object)) {
@@ -170,7 +167,6 @@ class ListingProperty extends DataProperty
                 $objectname = $object->name;
                 $data['objectname'] = $objectname;
                 if (!method_exists($object, 'getItems')) {
-                    sys::import('modules.dynamicdata.class.objects.factory');
                     $object = DataObjectFactory::getObjectList(['name' => $objectname]);
                 }
             }
@@ -360,8 +356,8 @@ class ListingProperty extends DataProperty
 
             // Ignore other fields that don't have active or list status
             if ($nofieldlist) {
-                if (($property->getDisplayStatus() != DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE) &&
-                    ($property->getDisplayStatus() != DataPropertyMaster::DD_DISPLAYSTATE_VIEWONLY)
+                if (($property->getDisplayStatus() != DataPropertyMaster::DD_DISPLAYSTATE_ACTIVE)
+                    && ($property->getDisplayStatus() != DataPropertyMaster::DD_DISPLAYSTATE_VIEWONLY)
                 ) {
                     continue;
                 }
@@ -741,8 +737,8 @@ class ListingProperty extends DataProperty
         $data['searchstring'] = $search;
 
         // Debug display
-        if (xarModVars::get('dynamicdata', 'debugmode') &&
-        in_array(xarUser::getVar('id'), xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+        if (xarModVars::get('dynamicdata', 'debugmode')
+        && in_array(xarUser::getVar('id'), xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
             echo "ID: " . $thissearch;
             echo "<br />";
             echo "Operation: " . $operation . " [" . $op . "]";
@@ -857,8 +853,8 @@ class ListingProperty extends DataProperty
         }
 
         // Debug display
-        if (xarModVars::get('dynamicdata', 'debugmode') &&
-        in_array(xarUser::getVar('id'), xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+        if (xarModVars::get('dynamicdata', 'debugmode')
+        && in_array(xarUser::getVar('id'), xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
             echo "Total rows: ";
             echo $data['total'];
             echo "<br />";
@@ -958,7 +954,6 @@ class ListingProperty extends DataProperty
     {
         if (xarController::$request->isAjax()) {
             $file = sys::code() . 'properties/listing/xartemplates/showinput.xt';
-            sys::import('xaraya.templating.compiler');
             $compiler = XarayaCompiler::instance();
             $output = $compiler->compileFile($file);
             $data = $this->runquery($data);
