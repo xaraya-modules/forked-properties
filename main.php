@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Address Property
  *
@@ -33,7 +34,6 @@
  * in the case of the latter, the sequence of fields is given by the order in which they appear in the configuration.
  */
 
-sys::import('modules.base.xarproperties.textbox');
 
 class AddressProperty extends TextBoxProperty
 {
@@ -53,12 +53,12 @@ class AddressProperty extends TextBoxProperty
 
     public function __construct(ObjectDescriptor $descriptor)
     {
-        $this->display_address_components = 'street,' . xarMLS::translate('Street') .
-                                            ';street2,' . xarMLS::translate('Street') .
-                                            ';city,' . xarMLS::translate('City') .
-                                            ';postal_code,' . xarMLS::translate('Postal Code') .
-                                            ';region,' . xarMLS::translate('Region') .
-                                            ';country,' . xarMLS::translate('Country') . ';';
+        $this->display_address_components = 'street,' . xarMLS::translate('Street')
+                                            . ';street2,' . xarMLS::translate('Street')
+                                            . ';city,' . xarMLS::translate('City')
+                                            . ';postal_code,' . xarMLS::translate('Postal Code')
+                                            . ';region,' . xarMLS::translate('Region')
+                                            . ';country,' . xarMLS::translate('Country') . ';';
 
         parent::__construct($descriptor);
         $this->tplmodule = 'auto';

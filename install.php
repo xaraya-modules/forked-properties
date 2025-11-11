@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Address Property
  *
@@ -11,8 +12,6 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
-sys::import('properties.address.main');
-sys::import('modules.dynamicdata.class.properties.interfaces');
 
 class AddressPropertyInstall extends AddressProperty implements iDataPropertyInstall
 {
