@@ -12,7 +12,6 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
-sys::import('modules.dynamicdata.xarproperties.objectref');
 
 class LanguagesProperty extends ObjectRefProperty
 {
@@ -63,7 +62,6 @@ class LanguagesProperty extends ObjectRefProperty
             return $this->options;
         }
 
-        sys::import('modules.dynamicdata.class.properties.master');
         /** @var ObjectRefProperty $property */
         $property = DataPropertyMaster::getProperty(['name' => 'objectref']);
         $property->initialization_refobject = 'languages';

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Language Property
  *
@@ -11,9 +12,6 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
-sys::import('properties.languages.main');
-sys::import('modules.dynamicdata.class.properties.interfaces');
-sys::import('modules.dynamicdata.class.objects.factory');
 
 class LanguagesPropertyInstall extends LanguagesProperty implements iDataPropertyInstall
 {
