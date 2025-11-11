@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeMirror Property
  *
@@ -17,7 +18,6 @@
  *
  */
 
-sys::import('modules.base.xarproperties.textarea');
 
 class CodeMirrorProperty extends TextAreaProperty
 {
