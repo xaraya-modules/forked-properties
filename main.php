@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Pager Property
  *
@@ -24,7 +25,6 @@
  *
  */
 
-sys::import('modules.base.xarproperties.textbox');
 
 /**
  * Pager Property
@@ -94,10 +94,10 @@ class PagerProperty extends TextBoxProperty
     public function getArgs(array $args = [])
     {
         $position = [
-                        'startnum' => $this->startnum,
-                        'order'    => $this->order,
-                        'items_per_page'     => $this->items_per_page,
-                     ];
+            'startnum' => $this->startnum,
+            'order'    => $this->order,
+            'items_per_page'     => $this->items_per_page,
+        ];
         foreach ($args as $key => $value) {
             $position[$key] = $value;
         }
@@ -107,8 +107,8 @@ class PagerProperty extends TextBoxProperty
     public function validate()
     {
         $validated = true;
-        if (empty($this->itemstotal) ||
-            ($this->itemstotal < 1)
+        if (empty($this->itemstotal)
+            || ($this->itemstotal < 1)
         ) {
             $validated = false;
         }
