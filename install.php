@@ -18,7 +18,7 @@ class ListingPropertyInstall extends ListingProperty implements iDataPropertyIns
         $dat_file = sys::code() . 'properties/listing/data/configurations-dat.xml';
         $data = ['file' => $dat_file];
         try {
-            $objectid = xarMod::apiFunc('dynamicdata', 'util', 'import', $data);
+            $objectid = $this->mod()->apiFunc('dynamicdata', 'util', 'import', $data);
         } catch (Exception $e) {
             //
         }

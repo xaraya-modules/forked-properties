@@ -103,12 +103,11 @@ class ListingProperty extends DataProperty
         if (isset($data['module'])) {
             $this->module = $data['module'];
         } else {
-            $info = xarController::getRequest()->getInfo();
-            $this->module = $info[0];
+            $this->module = $this->req()->getModule();
             $data['module'] = $this->module;
         }
 
-        $ipp = xarModVars::get($this->module, 'items_per_page');
+        $ipp = $this->mod($this->module)->getVar('items_per_page');
         if (!empty($ipp)) {
             $this->display_items_per_page = $ipp;
         }
@@ -178,11 +177,11 @@ class ListingProperty extends DataProperty
         // itemtype 0 means all itemtypes
         $itemtype ??= 0;
 
-        $module ??= xarMod::getName();
-        xarMod::apiLoad($module);
-        $regid = xarMod::getRegID($module);
+        $module ??= $this->mod()->getName();
+        $this->mod()->apiLoad($module);
+        $regid = $this->mod()->getRegID($module);
 
-        /*    $searchandor = xarModVars::get('listing','searchandor'); //toggle for AND /OR logic in category query, default AND for categories
+        /*    $searchandor = $this->mod('listing')->getVar('searchandor'); //toggle for AND /OR logic in category query, default AND for categories
             if ($searchandor != 1) { //default to AND
                 $searchop = 'and';
             } else {
@@ -191,7 +190,7 @@ class ListingProperty extends DataProperty
 
         //--- 3. Retrieve session vars we work with
 
-        $q = xarSession::getVar('listing.' . $objectname . '.currentquery');
+        $q = $this->session()->getVar('listing.' . $objectname . '.currentquery');
 
         // Default values for a first time search; possibly overridden below
         // We check for settings from the object's dataquery or just hardcode
@@ -209,7 +208,7 @@ class ListingProperty extends DataProperty
         // Create a unique internal ID for this query
         $thissearch = md5($object->dataquery->tostring());
 
-        $settings = xarSession::getVar('listing.settings');
+        $settings = $this->session()->getVar('listing.settings');
         if (!empty($settings) && isset($settings[$thissearch])) {
             // Get the settings of this search if they exist, overriding the above
             $thesesettings = $settings[$thissearch];
@@ -229,34 +228,34 @@ class ListingProperty extends DataProperty
 
         //--- 4. Get all the parameters we need from the form. These can override the sessionvar settings
 
-        if (!xarVar::fetch('startnum', 'int', $startnum, $laststartnum, xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('startnum', $startnum, 'int', $laststartnum)) {
             return;
         }
-        if (!xarVar::fetch('letter', 'str:1', $letter, '', xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('letter', $letter, 'str:1', '')) {
             return;
         }
-        if (!xarVar::fetch('search', 'str:1:100', $search, '', xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('search', $search, 'str:1:100', '')) {
             return;
         }
-        if (!xarVar::fetch('order', 'str', $order, $lastorder, xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('order', $order, 'str', $lastorder)) {
             return;
         }
-        if (!xarVar::fetch('sort', 'str', $sort, $lastsort, xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('sort', $sort, 'str', $lastsort)) {
             return;
         }
-        if (!xarVar::fetch('submit', 'str', $submit, '', xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('submit', $submit, 'str', '')) {
             return;
         }
-        if (!xarVar::fetch('op', 'str', $op, '', xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('op', $op, 'str', '')) {
             return;
         }
-        if (!xarVar::fetch('conditions', 'isset', $conditions, null, xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('conditions', $conditions, 'isset', null)) {
             return;
         }
-        if (!xarVar::fetch('export', 'int', $export, 0, xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('export', $export, 'int', 0)) {
             return;
         }
-        if (!xarVar::fetch('store', 'str:1', $store, 'session', xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('store', $store, 'str:1', 'session')) {
             return;
         }
 
@@ -266,7 +265,7 @@ class ListingProperty extends DataProperty
 
         // Check if the object has a primary key
         if (empty($object->primary)) {
-            throw new Exception(xarMLS::translate("The listing cannot be displayed, because this object has no primary key"));
+            throw new Exception($this->mls()->translate("The listing cannot be displayed, because this object has no primary key"));
         }
 
         // We'll put fields into the output of the query that have status active or list
@@ -422,7 +421,7 @@ class ListingProperty extends DataProperty
 
         // Sanity check to make sure we got a key
         if (empty($defaultkey)) {
-            throw new Exception(xarMLS::translate("The listing cannot be displayed, because no select key was found"));
+            throw new Exception($this->mls()->translate("The listing cannot be displayed, because no select key was found"));
         }
 
         // Check whether the order which may have been passed is still valid (we may have changed the display settings
@@ -435,7 +434,7 @@ class ListingProperty extends DataProperty
 
         //--- 7. Figure out the operation we are performing
 
-        $lastsearch = xarSession::getVar('listing.lastsearch');                 // get the ID of the last search
+        $lastsearch = $this->session()->getVar('listing.lastsearch');                 // get the ID of the last search
         $firsttime = empty($lastsearch) || ($thissearch != $lastsearch);        // criterium for first time display
         if ($firsttime) {
             $op = 'pagejump';
@@ -469,7 +468,7 @@ class ListingProperty extends DataProperty
             case "pagerclick":
             case "columnclick":
 
-                $q = xarSession::getVar('listing.' . $objectname . '.currentquery');
+                $q = $this->session()->getVar('listing.' . $objectname . '.currentquery');
                 if (empty($q) || !isset($q)) {
                     $q = new Query('SELECT');
                     $q->setdistinct();
@@ -516,7 +515,7 @@ class ListingProperty extends DataProperty
                 break;
 
             default:
-                throw new Exception(xarMLS::translate('Illegal operation: #(1)', $operation));
+                throw new Exception($this->mls()->translate('Illegal operation: #(1)', $operation));
         }
 
         //--- 12. Add categories to the query if they are active
@@ -586,17 +585,17 @@ class ListingProperty extends DataProperty
                     foreach ($alphabet as $let) {
                         $q->notlike($tablekeyfield, $let . '%');
                     }
-                    $data['msg'] = xarMLS::translate(
+                    $data['msg'] = $this->mls()->translate(
                         'Listing where #(1) begins with character not listed in alphabet above (labeled as "Other")',
                         $defaultkeyname
                     );
                 } elseif ($letter == 'All') {
-                    $data['msg'] = xarMLS::translate("All items");
+                    $data['msg'] = $this->mls()->translate("All items");
                 } else {
                     // TODO: handle case-sensitive databases
                     //$q->like('r.name', $letter.'%');
                     $object->dataquery->regex($tablekeyfield, '^(\\\%)*' . $letter);
-                    $data['msg'] = xarMLS::translate('Listing where #(1) begins with "#(2)"', $defaultkeyname, $letter);
+                    $data['msg'] = $this->mls()->translate('Listing where #(1) begins with "#(2)"', $defaultkeyname, $letter);
                 }
 
                 //Adjust session vars and parameters
@@ -626,16 +625,16 @@ class ListingProperty extends DataProperty
                     }
                     if (!empty($msg) && $i > 0) {
                         if (empty($data['msg'])) {
-                            $data['msg'] = xarMLS::translate('Listing where #(1) contain "#(2)"', $msg, $search);
+                            $data['msg'] = $this->mls()->translate('Listing where #(1) contain "#(2)"', $msg, $search);
                         } else {
-                            $data['msg'] .= xarMLS::translate(' and listing where #(1) contain "#(2)"', $msg, $search);
+                            $data['msg'] .= $this->mls()->translate(' and listing where #(1) contain "#(2)"', $msg, $search);
                         }
                     }
                     // take the conditions we decided on above and add them to the query as a bunch of ORs
                     $object->dataquery->qor($c);
                 }
                 if (empty($data['msg'])) {
-                    $data['msg'] = xarMLS::translate('All items');
+                    $data['msg'] = $this->mls()->translate('All items');
                 }
 
                 //Adjust session vars and parameters
@@ -652,7 +651,7 @@ class ListingProperty extends DataProperty
                 break;
 
             default:
-                throw new Exception(xarMLS::translate('Illegal operation: #(1)', $operation));
+                throw new Exception($this->mls()->translate('Illegal operation: #(1)', $operation));
         }
 
         //--- 19. Cache the dd object for reuse (if called)
@@ -707,16 +706,16 @@ class ListingProperty extends DataProperty
             }
             if ($store == 'session') {
                 // Store it all in a session var
-                xarSession::delVar('listing.' . $objectname);
-                xarSession::setVar('listing.' . $objectname, serialize($values));
+                $this->session()->delVar('listing.' . $objectname);
+                $this->session()->setVar('listing.' . $objectname, serialize($values));
             } else {
-                if (class_exists('xarVariableCache')) {
-                    if (xarVariableCache::isCached('listing.' . $objectname)) {
-                        xarVariableCache::delCached('listing.' . $objectname);
+                if ($this->cache()->withVariables()) {
+                    if ($this->cache()->hasVariable('listing.' . $objectname)) {
+                        $this->cache()->delVariable('listing.' . $objectname);
                     }
-                    xarVariableCache::setCached('listing.' . $objectname, serialize($values));
+                    $this->cache()->setVariable('listing.' . $objectname, serialize($values));
                 } else {
-                    $message = xarMLS::translate('Variable Caching needs to be turned on');
+                    $message = $this->mls()->translate('Variable Caching needs to be turned on');
                     die($message);
                 }
             }
@@ -737,8 +736,8 @@ class ListingProperty extends DataProperty
         $data['searchstring'] = $search;
 
         // Debug display
-        if (xarModVars::get('dynamicdata', 'debugmode')
-        && in_array(xarUser::getVar('id'), xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+        if ($this->mod('dynamicdata')->getVar('debugmode')
+        && in_array($this->user()->getVar('id'), $this->config()->getVar('Site.User.DebugAdmins'))) {
             echo "ID: " . $thissearch;
             echo "<br />";
             echo "Operation: " . $operation . " [" . $op . "]";
@@ -843,18 +842,18 @@ class ListingProperty extends DataProperty
         // Save the sequence of items for whoever. Do this only when an ID parameter was passed
         // We save both the keys and the query object, in case we need to recreate the query
         if (isset($data['id'])) {
-            $keys = xarSession::getVar('listing.lastkeys');
+            $keys = $this->session()->getVar('listing.lastkeys');
             if (empty($keys)) {
                 $keys = [];
             }
             $thisquerystring = serialize($object->dataquery->tostring());
             $keys[$data['id']] = ['keys' => array_keys($items), 'query' => $thisquerystring];
-            xarSession::setVar('listing.lastkeys', $keys);
+            $this->session()->setVar('listing.lastkeys', $keys);
         }
 
         // Debug display
-        if (xarModVars::get('dynamicdata', 'debugmode')
-        && in_array(xarUser::getVar('id'), xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+        if ($this->mod('dynamicdata')->getVar('debugmode')
+        && in_array($this->user()->getVar('id'), $this->config()->getVar('Site.User.DebugAdmins'))) {
             echo "Total rows: ";
             echo $data['total'];
             echo "<br />";
@@ -918,8 +917,8 @@ class ListingProperty extends DataProperty
         $thesesettings['laststartnum']       = $startnum;
         $thesesettings['lastitemsperpage']   = $items_per_page;
         $settings[$thissearch] = $thesesettings;
-        xarSession::setVar('listing.settings', $settings);
-        xarSession::setVar('listing.lastsearch', $thissearch);
+        $this->session()->setVar('listing.settings', $settings);
+        $this->session()->setVar('listing.lastsearch', $thissearch);
 
         // Sort of ugly. How can we do better?
         unset($q->dbconn);
@@ -935,8 +934,8 @@ class ListingProperty extends DataProperty
      */
     public function ajaxConfirm($flag = 'confirm')
     {
-        if (xarController::$request->isAjax()) {
-            if (!xarVar::fetch($flag, 'int', $confirm, 0, xarVar::NOT_REQUIRED)) {
+        if ($this->req()->getRequest()->isAJAX()) {
+            if (!$this->var()->find($flag, $confirm, 'int', 0)) {
                 return false;
             }
             return $confirm;
@@ -952,12 +951,12 @@ class ListingProperty extends DataProperty
      */
     public function ajaxRefresh($data = [])
     {
-        if (xarController::$request->isAjax()) {
+        if ($this->req()->getRequest()->isAJAX()) {
             $file = sys::code() . 'properties/listing/xartemplates/showinput.xt';
             $compiler = XarayaCompiler::instance();
             $output = $compiler->compileFile($file);
             $data = $this->runquery($data);
-            $output = xarTpl::string($output, $data);
+            $output = $this->tpl()->string($output, $data);
             echo $output;
             exit;
         } else {

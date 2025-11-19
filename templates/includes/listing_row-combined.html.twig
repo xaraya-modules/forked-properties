@@ -53,7 +53,7 @@
                     {% else %}
                         {# <!-- Output field --> #}
                         {% if field == keyfieldalias and allowread %}
-                            <a href=" }}xarServer::getCurrentURL(['itemid' => $itemidvalue])#">
+                            <a href="{{ xar_currenturl({'itemid': itemidvalue}) }}">
                                 {{ xar_data_output({property: properties[column], value: value, layout: "listing"}) }}
                             </a>
                         {% else %}

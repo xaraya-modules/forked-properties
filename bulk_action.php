@@ -12,40 +12,42 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
+use Xaraya\Services\xar;
+
 function listing_bulk_action(array $args = [], $context = null)
 {
-
+    $xar = xar::getServicesClass();
     // Get parameters
-    if (!xarVar::fetch('idlist', 'isset', $idlist, '', xarVar::DONT_SET)) {
+    if (!$xar->var()->find('idlist', $idlist, 'isset', '')) {
         return;
     }
-    if (!xarVar::fetch('operation', 'isset', $operation, null, xarVar::DONT_SET)) {
+    if (!$xar->var()->find('operation', $operation, 'isset', null)) {
         return;
     }
-    if (!xarVar::fetch('redirecttarget', 'isset', $redirecttarget, null, xarVar::DONT_SET)) {
+    if (!$xar->var()->find('redirecttarget', $redirecttarget, 'isset', null)) {
         return;
     }
-    if (!xarVar::fetch('returnurl', 'str', $returnurl, '', xarVar::NOT_REQUIRED)) {
+    if (!$xar->var()->find('returnurl', $returnurl, 'str', '')) {
         return;
     }
-    if (!xarVar::fetch('objectname', 'str', $objectname, null, xarVar::DONT_SET)) {
+    if (!$xar->var()->find('objectname', $objectname, 'str', null)) {
         return;
     }
-    if (!xarVar::fetch('module', 'str', $module, 'listings', xarVar::DONT_SET)) {
+    if (!$xar->var()->find('module', $module, 'str', 'listings')) {
         return;
     }
 
     // Must have an object defined
     if (empty($objectname)) {
-        xarController::redirect($returnurl, null, $context);
+        $xar->ctl()->redirect($returnurl);
     }
     // Must have some records defined
     if (empty($idlist)) {
-        xarController::redirect($returnurl, null, $context);
+        $xar->ctl()->redirect($returnurl);
     }
     // Must have an operation defined
     if (empty($operation)) {
-        xarController::redirect($returnurl, null, $context);
+        $xar->ctl()->redirect($returnurl);
     }
 
     $listing = DataObjectFactory::getObject(['name' => $objectname]);
@@ -83,11 +85,11 @@ function listing_bulk_action(array $args = [], $context = null)
         default: /* custom function */
             // Get the URL corresponding to this custom function
             $urlstring = 'funcurl_' . $operation;
-            xarVar::fetch($urlstring, 'str', $funcurl, '', xarVar::NOT_REQUIRED);
+            $xar->var()->find($urlstring, $funcurl, 'str', '');
 
             // If the URL is empty, bail
             if (empty($funcurl)) {
-                xarController::redirect($returnurl, null, $context);
+                $xar->ctl()->redirect($returnurl);
                 return true;
             }
 
@@ -113,9 +115,9 @@ function listing_bulk_action(array $args = [], $context = null)
             $funcpart = implode('_', $callparts);
 
             if ($api) {
-                $result = xarMod::apiFunc($modpart, $typepart, $funcpart, ['operation' => $operation]);
+                $result = $xar->mod()->apiFunc($modpart, $typepart, $funcpart, ['operation' => $operation]);
             } else {
-                $result = xarMod::guiFunc($modpart, $typepart, $funcpart, ['operation' => $operation]);
+                $result = $xar->mod()->guiFunc($modpart, $typepart, $funcpart, ['operation' => $operation]);
             }
             // Reshape the result into something we cna put in a URL
             $result = serialize($result);
@@ -158,9 +160,9 @@ function listing_bulk_action(array $args = [], $context = null)
                 $returnurl .= "&" . $listing_query . "=" . $result;
             }
 
-            xarController::redirect($returnurl, null, $context);
+            $xar->ctl()->redirect($returnurl);
             break;
     } // end switch
-    xarController::redirect($returnurl, null, $context);
+    $xar->ctl()->redirect($returnurl);
     return true;
 }

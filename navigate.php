@@ -10,6 +10,8 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
+use Xaraya\Services\xar;
+
 function navigate($listing_id, $itemid, $direction, $index_name, $url)
 {
     // Only 2 directions allowed
@@ -18,7 +20,7 @@ function navigate($listing_id, $itemid, $direction, $index_name, $url)
     }
 
     // Get the keys
-    $data = xarSession::getVar('listing.lastkeys');
+    $data = xar::session()->getVar('listing.lastkeys');
     if (!isset($data[$listing_id])) {
         return false;
     }
@@ -48,7 +50,7 @@ function navigate($listing_id, $itemid, $direction, $index_name, $url)
     }
 
     if (empty($url)) {
-        $url = xarServer::getCurrentURL([$index_name => $next_key]);
+        $url = xar::ctl()->getCurrentURL([$index_name => $next_key]);
     } else {
         $url_parts = parse_url($url);
         $cleanstring = html_entity_decode($url_parts['query']);
