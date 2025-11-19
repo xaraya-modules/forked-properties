@@ -20,7 +20,7 @@ class IconCheckboxPropertyInstall extends IconCheckboxProperty implements iDataP
         $dat_file = sys::code() . 'properties/iconcheckbox/data/configurations-dat.xml';
         $data = ['file' => $dat_file];
         try {
-            $objectid = xarMod::apiFunc('dynamicdata', 'util', 'import', $data);
+            $objectid = $this->mod()->apiFunc('dynamicdata', 'util', 'import', $data);
         } catch (Exception $e) {
             //
         }
