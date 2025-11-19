@@ -22,7 +22,7 @@ class LanguagesPropertyInstall extends LanguagesProperty implements iDataPropert
             $files[] = sys::code() . 'properties/languages/data/language-dat.xml';
             foreach ($files as $file) {
                 try {
-                    $objectid = xarMod::apiFunc('dynamicdata', 'util', 'import', ['file' => $file]);
+                    $objectid = $this->mod()->apiFunc('dynamicdata', 'util', 'import', ['file' => $file]);
                 } catch (Exception $e) {
                     // We only load the object once
                     break;
