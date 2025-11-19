@@ -46,7 +46,7 @@ class DateProperty extends DataProperty
         $name = empty($name) ? 'dd_' . $this->id : $name;
 
         // Get the input type flag from the template so we know how to proceed
-        if (!xarVar::fetch('input_type_' . $name, 'str:1:100', $input_type, '', xarVar::NOT_REQUIRED)) {
+        if (!$this->var()->find('input_type_' . $name, $input_type, 'str:1:100', '')) {
             return;
         }
         if (empty($input_type)) {
@@ -69,7 +69,7 @@ class DateProperty extends DataProperty
             $value = mktime(0, 0, 0, $months, $days, $years);
         } else {
             // Get the date value from a datetime-local input
-            if (!xarVar::fetch($name, 'str:1:100', $template_value, '', xarVar::NOT_REQUIRED)) {
+            if (!$this->var()->find($name, $template_value, 'str:1:100', '')) {
                 return;
             }
             if ($template_value != '') {
