@@ -20,7 +20,7 @@ class DateTimePropertyInstall extends DateTimeProperty implements iDataPropertyI
         $dat_file = sys::code() . 'properties/datetime/data/configurations-dat.xml';
         $data = ['file' => $dat_file];
         try {
-            $objectid = xarMod::apiFunc('dynamicdata', 'util', 'import', $data);
+            $objectid = $this->mod()->apiFunc('dynamicdata', 'util', 'import', $data);
         } catch (Exception $e) {
             //
         }
