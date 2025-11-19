@@ -53,12 +53,12 @@ class AddressProperty extends TextBoxProperty
 
     public function __construct(ObjectDescriptor $descriptor)
     {
-        $this->display_address_components = 'street,' . xarMLS::translate('Street')
-                                            . ';street2,' . xarMLS::translate('Street')
-                                            . ';city,' . xarMLS::translate('City')
-                                            . ';postal_code,' . xarMLS::translate('Postal Code')
-                                            . ';region,' . xarMLS::translate('Region')
-                                            . ';country,' . xarMLS::translate('Country') . ';';
+        $this->display_address_components = 'street,' . $this->mls()->translate('Street')
+                                            . ';street2,' . $this->mls()->translate('Street')
+                                            . ';city,' . $this->mls()->translate('City')
+                                            . ';postal_code,' . $this->mls()->translate('Postal Code')
+                                            . ';region,' . $this->mls()->translate('Region')
+                                            . ';country,' . $this->mls()->translate('Country') . ';';
 
         parent::__construct($descriptor);
         $this->tplmodule = 'auto';
@@ -102,9 +102,9 @@ class AddressProperty extends TextBoxProperty
             $count = count($invalid);
             $invalid = implode(',', $invalid);
             if ($count == 1) {
-                $this->invalid = xarMLS::translate('The field #(1) is not valid', $invalid);
+                $this->invalid = $this->mls()->translate('The field #(1) is not valid', $invalid);
             } else {
-                $this->invalid = xarMLS::translate('The fields #(1) are not valid', $invalid);
+                $this->invalid = $this->mls()->translate('The fields #(1) are not valid', $invalid);
             }
         }
         return $valid;
@@ -113,7 +113,7 @@ class AddressProperty extends TextBoxProperty
     public function validateValue($value = null)
     {
         // Dummy method
-        xarLog::message("DataProperty::validateValue: Validating property " . $this->name, xarLog::LEVEL_DEBUG);
+        $this->log()->debug("DataProperty::validateValue: Validating property " . $this->name);
         return true;
     }
 
@@ -158,8 +158,7 @@ class AddressProperty extends TextBoxProperty
         if (isset($data['module'])) {
             $this->module = $data['module'];
         } else {
-            $info = xarController::$request->getInfo();
-            $this->module = $info[0];
+            $this->module = $this->req()->getModule();
             $data['module'] = $this->module;
         }
         if (empty($data['address_components'])) {
@@ -235,8 +234,7 @@ class AddressProperty extends TextBoxProperty
         if (isset($data['module'])) {
             $this->module = $data['module'];
         } else {
-            $info = xarController::$request->getInfo();
-            $this->module = $info[0];
+            $this->module = $this->req()->getModule();
             $data['module'] = $this->module;
         }
         if (empty($data['address_components'])) {
@@ -369,8 +367,7 @@ class AddressProperty extends TextBoxProperty
         if (isset($data['module'])) {
             $this->module = $data['module'];
         } else {
-            $info = xarController::$request->getInfo();
-            $this->module = $info[0];
+            $this->module = $this->req()->getModule();
             $data['module'] = $this->module;
         }
         if (empty($data['address_components'])) {

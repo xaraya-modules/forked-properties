@@ -20,7 +20,7 @@ class AddressPropertyInstall extends AddressProperty implements iDataPropertyIns
         $dat_file = sys::code() . 'properties/address/data/configurations-dat.xml';
         $data = ['file' => $dat_file];
         try {
-            $objectid = xarMod::apiFunc('dynamicdata', 'util', 'import', $data);
+            $objectid = $this->mod()->apiFunc('dynamicdata', 'util', 'import', $data);
         } catch (Exception $e) {
             //
         }
