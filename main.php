@@ -74,6 +74,12 @@ class IconDropdownProperty extends SelectProperty
         if (!empty($data['icon_directory']) && !empty($data['icon_option'])) {
             $iconpath = sys::code() . 'properties/icondropdown/xartemplates/icons/' . $data['icon_directory'] . '/' . $data['icon_option'];
             if (file_exists($iconpath) && !is_dir($iconpath)) {
+                // Turn relative path into an absolute URL
+                $webDir = sys::web();
+                if (!empty($webDir) && strpos($iconpath, $webDir) === 0) {
+                    $iconpath = substr($iconpath, strlen($webDir));
+                }
+                $iconpath = $this->ctl()->getBaseURL() . $iconpath;
                 $data['iconpath'] = $iconpath;
             }
         }
