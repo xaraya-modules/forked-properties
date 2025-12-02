@@ -66,9 +66,9 @@ class PagerProperty extends TextBoxProperty
                 'startnum' => "%%",
                 'items_per_page' => $this->items_per_page,
             ];
-            $this->urltemplate = xarServer::getCurrentURL($addons);
+            $this->urltemplate = $this->ctl()->getCurrentURL($addons);
         }
-        $this->module = xarMod::getName();
+        $this->module = $this->mod()->getName();
     }
 
     public function checkInput($name = '', $value = null)
@@ -76,16 +76,16 @@ class PagerProperty extends TextBoxProperty
         if (!empty($name)) {
             $name = $name . "_";
         }
-        if (!xarVar::fetch($name . 'startnum', 'int', $this->startnum, null, xarVar::DONT_SET)) {
+        if (!$this->var()->fetch($name . 'startnum', 'int', $this->startnum, null, ixarVar::DONT_SET)) {
             return;
         }
-        if (!xarVar::fetch($name . 'order', 'str', $this->order, null, xarVar::DONT_SET)) {
+        if (!$this->var()->fetch($name . 'order', 'str', $this->order, null, ixarVar::DONT_SET)) {
             return;
         }
-        if (!xarVar::fetch($name . 'items_per_page', 'int', $this->items_per_page, null, xarVar::DONT_SET)) {
+        if (!$this->var()->fetch($name . 'items_per_page', 'int', $this->items_per_page, null, ixarVar::DONT_SET)) {
             return;
         }
-        if (!xarVar::fetch($name . 'itemstotal', 'int', $this->itemstotal, null, xarVar::DONT_SET)) {
+        if (!$this->var()->fetch($name . 'itemstotal', 'int', $this->itemstotal, null, ixarVar::DONT_SET)) {
             return;
         }
         return true;
@@ -126,7 +126,7 @@ class PagerProperty extends TextBoxProperty
         if (isset($items_per_page)) {
             $this->items_per_page = $items_per_page;
         } else {
-            $moduleitems_per_page = xarModVars::get($this->module, 'items_per_page');
+            $moduleitems_per_page = $this->mod($this->module)->getVar('items_per_page');
             if (!empty($moduleitems_per_page)) {
                 $this->items_per_page = $moduleitems_per_page;
             }
