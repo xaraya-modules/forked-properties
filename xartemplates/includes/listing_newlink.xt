@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:access level="600">
-        <xar:set name="returnurl">xarController::URL($module,'user','view')</xar:set>
-        <a style="font-weight:bold;" href ="#xarController::URL($module,'admin','new',['name'=> $objectname, 'tplmodule'=> $module])#">Add A New Item</a>
+        <xar:set name="returnurl">$xar->ctl()->URL($module,'user','view')</xar:set>
+        <a style="font-weight:bold;" href ="#$xar->ctl()->URL($module,'admin','new',['name'=> $objectname, 'tplmodule'=> $module])#">Add A New Item</a>
     </xar:access>
 </xar:template>

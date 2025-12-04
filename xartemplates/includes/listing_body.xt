@@ -6,8 +6,8 @@
         <xar:else/>
             <xar:set name="item_class">'xar-norm'</xar:set>
         </xar:if>
-        <xar:if condition="xarUser::isLoggedIn()">
-            <xar:set name="currentuserid">xarUser::getVar('id');</xar:set>
+        <xar:if condition="$xar->user()->isLoggedIn()">
+            <xar:set name="currentuserid">$xar->user()->getVar('id');</xar:set>
         </xar:if>
 
         <xar:set name="loopindex">$loop->index</xar:set>

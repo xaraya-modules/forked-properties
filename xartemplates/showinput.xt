@@ -26,7 +26,7 @@
             <xar:set name="allowedit">true</xar:set>
         </xar:access>
 
-        <xar:set name="url">xarServer::getCurrentURL($params)</xar:set>
+        <xar:set name="url">$xar->ctl()->getCurrentURL($params)</xar:set>
 
         <xar:if condition="!isset($show_bulk)">
             <xar:set name="show_bulk">true</xar:set>

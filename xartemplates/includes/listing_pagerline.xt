@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:set name="url">xarServer::getCurrentURL($params)</xar:set>
+    <xar:set name="url">$xar->ctl()->getCurrentURL($params)</xar:set>
         <form action="#$url#" method="post" style="clear: both">
             <xar:if condition="($items_per_page lt $total)">
                 <div class="xar-align-center">

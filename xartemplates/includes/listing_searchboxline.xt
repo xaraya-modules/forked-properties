@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:if condition="$show_search">
-        <form method="post" action="#xarServer::getCurrentURL()#">
+        <form method="post" action="#$xar->ctl()->getCurrentURL()#">
             <xar:set name="search">isset($search) ? $search : '';</xar:set>
             <xar:set name="searchclass">'xar-floatleft xar-fullwidth xar-align-center'</xar:set>
             <div class="#$searchclass#" style="height:50px;padding:0 10px;margin:0 5px 0 0;">
@@ -14,7 +14,7 @@
                 <xar:button type="submit" label="$label"/>
                 <xar:if condition="!empty($msg)">
                     <div style="height:auto;padding:0 10px;margin:0 5px 0 0;">
-                        Selected on: #xarVarPrep::text($msg)#
+                        Selected on: #$xar->prep()->text($msg)#
                    </div>
                 </xar:if>
             </div>

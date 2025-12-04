@@ -3,10 +3,10 @@
     <xar:if condition="$order eq $column">
         <xar:if condition="$sort eq 'ASC'">
             <xar:var name="label">Sorted Ascending</xar:var>
-            <img src="#xarTpl::getImage('s_asc.png', 'property','listing')#" alt="#$label#" title="#$label#"/>
+            <img src="#$xar->tpl()->getImage('s_asc.png', 'property','listing')#" alt="#$label#" title="#$label#"/>
         <xar:elseif condition="$sort eq 'DESC'" />
             <xar:var name="label">Sorted Descending</xar:var>
-            <img src="#xarTpl::getImage('s_desc.png', 'property','listing')#" alt="#$label#" title="#$label#"/>
+            <img src="#$xar->tpl()->getImage('s_desc.png', 'property','listing')#" alt="#$label#" title="#$label#"/>
         </xar:if>
     </xar:if>
 </xar:template>

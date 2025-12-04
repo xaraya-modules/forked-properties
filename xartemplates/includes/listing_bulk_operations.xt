@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <form  action="#xarController::URL('dynamicdata','user','property',['prop' => 'listing','act' => 'bulk_action'])#" method="post" enctype="application/x-www-form-urlencoded" onsubmit = "listing_getchecked('idlist');document.getElementById('redirecttarget').value = this.value;">
+    <form  action="#$xar->ctl()->URL('dynamicdata','user','property',['prop' => 'listing','act' => 'bulk_action'])#" method="post" enctype="application/x-www-form-urlencoded" onsubmit = "listing_getchecked('idlist');document.getElementById('redirecttarget').value = this.value;">
         <xar:access level="700">
             <xar:if condition="$total gt 0">
                 <div style="text-align:center; padding-top:10px;">
-                
 					<!-- URLs for custom functions -->
-					<!-- We set a line for each function: 
+					<!-- We set a line for each function:
 						- the name contains an ID in the dropdown below
 						- the name is the URL (in Xaraya format) that will be executed
 					-->
@@ -33,7 +32,7 @@
                 </div>
             </xar:if>
         </xar:access>
-        <input type="hidden" name="returnurl" id="returnurl" value="#xarServer::getCurrentURL()#"/>
+        <input type="hidden" name="returnurl" id="returnurl" value="#$xar->ctl()->getCurrentURL()#"/>
         <input type="hidden" name="objectname" id="objectname" value="#$objectname#"/>
         <input type="hidden" name="localmodule" id="localmodule" value="#$module#"/>
     </form>
