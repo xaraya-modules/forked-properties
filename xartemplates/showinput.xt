@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
-    <script src="#xarTpl::getFile('codemirrorui/lib/CodeMirror-2.0/lib/codemirror.js','property','codemirror')#" type="text/javascript"/>
-    <link rel="stylesheet" href="#xarTpl::getFile('codemirrorui/lib/CodeMirror-2.0/lib/codemirror.css','property','codemirror')#"/>
-    <script src="#xarTpl::getFile('codemirrorui/lib/CodeMirror-2.0/mode/javascript/javascript.js','property','codemirror')#"/>
-    <link rel="stylesheet" href="#xarTpl::getFile('codemirrorui/lib/CodeMirror-2.0/mode/javascript/javascript.css','property','codemirror')#"/>
+    <script src="#$xar->tpl()->getFile('codemirrorui/lib/CodeMirror-2.0/lib/codemirror.js','property','codemirror')#" type="text/javascript"/>
+    <link rel="stylesheet" href="#$xar->tpl()->getFile('codemirrorui/lib/CodeMirror-2.0/lib/codemirror.css','property','codemirror')#"/>
+    <script src="#$xar->tpl()->getFile('codemirrorui/lib/CodeMirror-2.0/mode/javascript/javascript.js','property','codemirror')#"/>
+    <link rel="stylesheet" href="#$xar->tpl()->getFile('codemirrorui/lib/CodeMirror-2.0/mode/javascript/javascript.css','property','codemirror')#"/>
     
-    <script src="#xarTpl::getFile('codemirrorui/js/codemirror-ui.js','property','codemirror')#" type="text/javascript"/>
-    <link rel="stylesheet" href="#xarTpl::getFile('codemirrorui/css/codemirror-ui.css','property','codemirror')#" type="text/css" media="screen" />
+    <script src="#$xar->tpl()->getFile('codemirrorui/js/codemirror-ui.js','property','codemirror')#" type="text/javascript"/>
+    <link rel="stylesheet" href="#$xar->tpl()->getFile('codemirrorui/css/codemirror-ui.css','property','codemirror')#" type="text/css" media="screen" />
 
 
     <xar:if condition="empty($style)">
@@ -26,7 +26,7 @@
         <xar:data-input type="textarea" id="$name" name="$name" style="$style" rows="$rows" cols="$cols" value="$value"/>
     </div>
 
-    <xar:set name="path">dirname(xarTpl::getFile('codemirrorui/js/codemirror-ui.js','property','codemirror'))</xar:set>
+    <xar:set name="path">dirname($xar->tpl()->getFile('codemirrorui/js/codemirror-ui.js','property','codemirror'))</xar:set>
     <script>
       var textarea = document.getElementById('#$name#');
       var editor = new CodeMirrorUI(textarea,
