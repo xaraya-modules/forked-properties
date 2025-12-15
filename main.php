@@ -68,7 +68,7 @@ class PagerProperty extends TextBoxProperty
             ];
             $this->urltemplate = $this->ctl()->getCurrentURL($addons);
         }
-        $this->module = $this->mod()->getName();
+        $this->module = $this->req()->getModule();
     }
 
     public function checkInput($name = '', $value = null)
