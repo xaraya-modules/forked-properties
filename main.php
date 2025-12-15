@@ -177,7 +177,7 @@ class ListingProperty extends DataProperty
         // itemtype 0 means all itemtypes
         $itemtype ??= 0;
 
-        $module ??= $this->mod()->getName();
+        $module ??= $this->req()->getModule();
         $this->mod()->apiLoad($module);
         $regid = $this->mod()->getRegID($module);
 
